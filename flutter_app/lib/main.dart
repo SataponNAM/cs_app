@@ -5,6 +5,7 @@ import 'package:flutter_app/widgets/main_wrapper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
+  
   runApp(
     MultiBlocProvider(
       providers: [

@@ -19,8 +19,8 @@ class SideMenu extends StatelessWidget {
       "หน้าหลัก",
     ),
     _NavigationItem(
-      NavItem.aboutMenu,
-      "เกี่ยวกับภาควิชา",
+      NavItem.csbPage,
+      "โครงการพิเศษ(สองภาษา)",
     ),
     _NavigationItem(
       NavItem.downloadMenu,
@@ -112,7 +112,7 @@ int _getIndexFromNavItem(NavItem item) {
   switch (item) {
     case NavItem.home:
       return 0;
-    case NavItem.aboutMenu:
+    case NavItem.csbPage:
       return 4;
     default:
       return 0;

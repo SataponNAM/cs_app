@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/logic/bottom_nav_cubit.dart';
 import 'package:flutter_app/logic/drawer/drawer_bloc.dart';
-import 'package:flutter_app/pages/contact_page.dart';
+import 'package:flutter_app/pages/main_pages/contact_page.dart';
 import 'package:flutter_app/pages/csb/csb_page.dart';
 import 'package:flutter_app/widgets/side_menu.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconly/iconly.dart';
 
-import '../pages/pages.dart';
+import '../pages/main_pages/pages.dart';
 
 class MainWrapper extends StatefulWidget {
   const MainWrapper({super.key});
@@ -133,23 +133,23 @@ class _MainWrapperState extends State<MainWrapper> {
                 _bottomAppBarItem(context,
                     defaultIcon: IconlyLight.home,
                     page: 0,
-                    label: "Home",
+                    label: "หน้าหลัก",
                     filledIcon: IconlyBold.home),
                 _bottomAppBarItem(context,
-                    defaultIcon: IconlyLight.home,
+                    defaultIcon: IconlyLight.user,
                     page: 1,
-                    label: "Professor",
-                    filledIcon: IconlyBold.home),
+                    label: "อาจารย์",
+                    filledIcon: IconlyBold.user_2),
                 _bottomAppBarItem(context,
-                    defaultIcon: IconlyLight.home,
+                    defaultIcon: IconlyLight.document,
                     page: 2,
-                    label: "Course",
-                    filledIcon: IconlyBold.home),
+                    label: "หลักสูตร",
+                    filledIcon: IconlyBold.document),
                 _bottomAppBarItem(context,
-                    defaultIcon: IconlyLight.home,
+                    defaultIcon: IconlyLight.call,
                     page: 3,
-                    label: "Contact",
-                    filledIcon: IconlyBold.home)
+                    label: "ติดต่อ",
+                    filledIcon: IconlyBold.call)
               ],
             ),
           ),
