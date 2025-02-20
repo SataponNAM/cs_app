@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/logic/bottom_nav_cubit.dart';
 import 'package:flutter_app/logic/drawer/drawer_bloc.dart';
-import 'package:flutter_app/pages/login/login_page.dart';
+import 'package:flutter_app/pages/auth_page/login_page.dart';
 import 'package:flutter_app/widgets/main_wrapper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: MainWrapper(),
+      home: LoginPage()//MainWrapper(),
     );
   }
 }
