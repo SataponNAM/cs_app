@@ -23,13 +23,11 @@ class _LoginPageState extends State<LoginPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Center(
-                child: Text(
-                  'Welcome Back',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                ),
+              Text(
+                'Welcome Back',
+                style: TextStyle(fontSize: 18, color: Color(0xFF65558F),),
               ),
-              SizedBox(height: 40),
+              SizedBox(height: 20),
 
               // Username
               TextFormField(
@@ -47,7 +45,7 @@ class _LoginPageState extends State<LoginPage> {
                 },
               ),
 
-              SizedBox(height: 25),
+              SizedBox(height: 20),
               // Password
               TextFormField(
                 controller: _passwordController,
@@ -78,17 +76,15 @@ class _LoginPageState extends State<LoginPage> {
                 },
                 child: Text(
                   'Login',
-                  style: TextStyle(fontSize: 18),
+                  style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
                 ),
-                style: ButtonStyle(
-                  padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
-                    EdgeInsets.all(15),
-                  ),
-                  shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.all(15),
+                  shape: 
                     RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                  ),
+                    backgroundColor: Color(0xFF65558F),
                 ),
               ),
             ],
