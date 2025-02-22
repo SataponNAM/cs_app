@@ -19,6 +19,10 @@ class SideMenu extends StatelessWidget {
       "หน้าหลัก",
     ),
     _NavigationItem(
+      NavItem.aboutMenu,
+      "แนะนำภาควิชาฯ",
+    ),
+    _NavigationItem(
       NavItem.csbPage,
       "โครงการพิเศษ(สองภาษา)",
     ),
@@ -32,7 +36,11 @@ class SideMenu extends StatelessWidget {
     ),
     _NavigationItem(
       NavItem.serviceMenu,
-      "บริการนักศึกษา",
+      "บริการนักศึกษา/บุคลากร",
+    ),
+    _NavigationItem(
+      NavItem.ruleMenu,
+      "ระเบียบ/ประกาศ",
     ),
   ];
 
@@ -114,10 +122,18 @@ int _getIndexFromNavItem(NavItem item) {
       return 0;
     case NavItem.csbPage:
       return 4;
+    case NavItem.newsMenu:
+      return 5;
+    case NavItem.downloadMenu:
+      return 6;
+    case NavItem.serviceMenu:
+      return 7;
+    case NavItem.aboutMenu:
+      return 8;
+    case NavItem.ruleMenu:
+      return 9;
     default:
       return 0;
   }
 }
-
-
 }

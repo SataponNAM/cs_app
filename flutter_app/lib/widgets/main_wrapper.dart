@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/logic/bottom_nav_cubit.dart';
 import 'package:flutter_app/logic/drawer/drawer_bloc.dart';
+import 'package:flutter_app/pages/about/about_page.dart';
+import 'package:flutter_app/pages/download/download_page.dart';
 import 'package:flutter_app/pages/main_pages/contact_page.dart';
 import 'package:flutter_app/pages/csb/csb_page.dart';
+import 'package:flutter_app/pages/news/news_page.dart';
+import 'package:flutter_app/pages/rule/rule_page.dart';
+import 'package:flutter_app/pages/service/service_page.dart';
 import 'package:flutter_app/widgets/side_menu.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconly/iconly.dart';
@@ -31,6 +36,11 @@ class _MainWrapperState extends State<MainWrapper> {
     CoursePage(),
     ContactPage(),
     CsbPage(),
+    NewsPage(),
+    DownloadPage(),
+    ServicePage(),
+    AboutPage(),
+    RulePage()
   ];
 
   @override
