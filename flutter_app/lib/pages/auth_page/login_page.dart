@@ -32,7 +32,7 @@ class _LoginPageState extends State<LoginPage> {
             const Padding(
               padding: EdgeInsets.only(left: 30),
               child: Text(
-                'Login',
+                'Sign In',
                 style: TextStyle(
                   fontSize: 40,
                   color: Colors.white,
@@ -135,7 +135,7 @@ class _LoginPageState extends State<LoginPage> {
                           backgroundColor: Color(0xFF65558F),
                         ),
                         child: const Text(
-                          'Login',
+                          'Sign In',
                           style: TextStyle(
                               fontSize: 18,
                               color: Colors.white,
@@ -160,7 +160,7 @@ class _LoginPageState extends State<LoginPage> {
                                   MaterialPageRoute(
                                       builder: (context) => SignUpPage()));
                             },
-                            child: const Text('Sign In',
+                            child: const Text('Sign Up',
                                 style: TextStyle(
                                   fontSize: 16,
                                   color: Color(0xFF65558F),

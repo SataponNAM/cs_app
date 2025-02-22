@@ -15,10 +15,6 @@ class SideMenu extends StatelessWidget {
 
   final List<_NavigationItem> _listItems = [
     _NavigationItem(
-      NavItem.home,
-      "หน้าหลัก",
-    ),
-    _NavigationItem(
       NavItem.csbPage,
       "โครงการพิเศษ(สองภาษา)",
     ),
@@ -110,8 +106,6 @@ class SideMenu extends StatelessWidget {
 
 int _getIndexFromNavItem(NavItem item) {
   switch (item) {
-    case NavItem.home:
-      return 0;
     case NavItem.csbPage:
       return 4;
     default:
