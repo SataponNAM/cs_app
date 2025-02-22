@@ -15,7 +15,6 @@ class SideMenu extends StatelessWidget {
 
   final List<_NavigationItem> _listItems = [
     _NavigationItem(
-<<<<<<< HEAD
       NavItem.home,
       "หน้าหลัก",
     ),
@@ -24,8 +23,6 @@ class SideMenu extends StatelessWidget {
       "แนะนำภาควิชาฯ",
     ),
     _NavigationItem(
-=======
->>>>>>> ca19191747dfb9d1ceddef06201bcab9379df4b8
       NavItem.csbPage,
       "โครงการพิเศษ(สองภาษา)",
     ),
