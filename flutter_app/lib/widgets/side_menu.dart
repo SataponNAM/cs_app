@@ -103,31 +103,31 @@ class SideMenu extends StatelessWidget {
 
   /// Tap OnEach item Handler
   void _handleItemClick(BuildContext context, _NavigationItem data) {
-  int index = _getIndexFromNavItem(data.item);
-  
-  // เปลี่ยนหน้าโดยใช้ BottomNavCubit
-  context.read<BottomNavCubit>().changeSelectedIndex(index);
-  
-  // ปิด Side Menu
-  Navigator.pop(context);
-}
-
-int _getIndexFromNavItem(NavItem item) {
-  switch (item) {
-    case NavItem.csbPage:
-      return 4;
-    case NavItem.newsMenu:
-      return 5;
-    case NavItem.downloadMenu:
-      return 6;
-    case NavItem.serviceMenu:
-      return 7;
-    case NavItem.aboutMenu:
-      return 8;
-    case NavItem.ruleMenu:
-      return 9;
-    default:
-      return 0;
+    int index = _getIndexFromNavItem(data.item);
+    
+    // เปลี่ยนหน้าโดยใช้ BottomNavCubit
+    context.read<BottomNavCubit>().changeSelectedIndex(index);
+    
+    // ปิด Side Menu
+    Navigator.pop(context);
   }
-}
+
+  int _getIndexFromNavItem(NavItem item) {
+    switch (item) {
+      case NavItem.csbPage:
+        return 4;
+      case NavItem.newsMenu:
+        return 5;
+      case NavItem.downloadMenu:
+        return 6;
+      case NavItem.serviceMenu:
+        return 7;
+      case NavItem.aboutMenu:
+        return 8;
+      case NavItem.ruleMenu:
+        return 9;
+      default:
+        return 0;
+    }
+  }
 }
