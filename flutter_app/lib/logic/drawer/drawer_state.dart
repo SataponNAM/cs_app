@@ -7,7 +7,7 @@ enum NavItem {
   downloadMenu,
   serviceMenu,
   csbPage,
-  ruleMenu
+  ruleMenu,
 }
 
 class DrawerState extends Equatable {

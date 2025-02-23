@@ -10,17 +10,50 @@ class CsbPage extends StatefulWidget {
 
 class _CsbPageState extends State<CsbPage> {
   late WebViewController webViewController;
+   bool isLoading = true;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     webViewController = WebViewController()
-    ..loadRequest(Uri.parse('http://www.cs.kmutnb.ac.th/csb.jsp'));
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)  // เปิดใช้งาน JavaScript
+      ..setNavigationDelegate(NavigationDelegate(
+        onProgress: (progress) {},
+        onPageStarted: (String url) {},
+        onPageFinished: (String url) {
+          webViewController.runJavaScript('''
+            // Navigation Bar
+            var navElement = document.querySelector('nav');
+            if (navElement) {
+              navElement.style.display = 'none';
+            }
+
+            // Hide footer
+            var footerElement = document.querySelector('footer');
+            if (footerElement) {
+              footerElement.style.display = 'none';
+            }
+
+            // Hide class "probootstrap-section probootstrap-section-colored"
+            var sections = document.querySelectorAll('.probootstrap-section.probootstrap-section-colored');
+            sections.forEach(section => {
+              section.style.display = 'none';
+            });
+          ''');
+          isLoading = false;
+          setState(() {});
+        },
+        onWebResourceError: (WebResourceError error) {
+          //Things to do when the page has error when loading
+       },
+      ))
+      ..loadRequest(Uri.parse('http://www.cs.kmutnb.ac.th/csb.jsp'));
   }
 
   @override
   Widget build(BuildContext context) {
-    return WebViewWidget(controller: webViewController);
+    return Scaffold(
+      body: WebViewWidget(controller: webViewController),
+    );
   }
 }

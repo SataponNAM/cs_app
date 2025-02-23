@@ -15,12 +15,12 @@ class SideMenu extends StatelessWidget {
 
   final List<_NavigationItem> _listItems = [
     _NavigationItem(
-      NavItem.home,
-      "หน้าหลัก",
+      NavItem.aboutMenu,
+      "แนะนำภาควิชา",
     ),
     _NavigationItem(
-      NavItem.aboutMenu,
-      "แนะนำภาควิชาฯ",
+      NavItem.newsMenu,
+      "ข่าวสารและกิจกรรม",
     ),
     _NavigationItem(
       NavItem.csbPage,
@@ -29,10 +29,6 @@ class SideMenu extends StatelessWidget {
     _NavigationItem(
       NavItem.downloadMenu,
       "ดาวน์โหลด", 
-    ),
-    _NavigationItem(
-      NavItem.newsMenu,
-      "ข่าวสาร/กิจกรรม",
     ),
     _NavigationItem(
       NavItem.serviceMenu,
