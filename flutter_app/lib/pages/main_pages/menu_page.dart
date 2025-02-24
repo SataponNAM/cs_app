@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/logic/drawer/drawer_bloc.dart';
 import 'package:flutter_app/logic/bottom_nav_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_app/logic/drawer/drawer_bloc.dart';
+
+class MenuPage extends StatefulWidget {
+  const MenuPage({super.key});
+
+  @override
+  State<MenuPage> createState() => _MenuPageState();
+}
 
 class _NavigationItem {
   final NavItem item;
@@ -10,9 +17,7 @@ class _NavigationItem {
   _NavigationItem(this.item, this.title);
 }
 
-class SideMenu extends StatelessWidget {
-  SideMenu({super.key});
-
+class _MenuPageState extends State<MenuPage> {
   final List<_NavigationItem> _listItems = [
     _NavigationItem(
       NavItem.aboutMenu,
@@ -42,37 +47,20 @@ class SideMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 288,
-      height: double.infinity,
-      color: const Color.fromARGB(255, 243, 237, 247),
-      child: SafeArea(
-          child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const ListTile(
-            leading: CircleAvatar(),
-            title: Text("CS App"),
-          ),
-          Column(
-            children: [
-              ListView.builder(
-                  padding: EdgeInsets.zero,
-                  itemCount: _listItems.length,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    return BlocBuilder<DrawerBloc, DrawerState>(
-                      buildWhen: (previous, current) {
-                        return previous.selectedItem != current.selectedItem;
-                      },
-                      builder: (context, state) => 
-                      _buildItem(_listItems[index], state),
-                    );
-                  })
-            ],
-          )
-        ],
-      )),
+    return Scaffold(
+      body: ListView.builder(
+        padding: EdgeInsets.zero,
+        itemCount: _listItems.length,
+        shrinkWrap: true,
+        itemBuilder: (context, index) {
+          return BlocBuilder<DrawerBloc, DrawerState>(
+            buildWhen: (previous, current) {
+              return previous.selectedItem != current.selectedItem;
+            },
+            builder: (context, state) => _buildItem(_listItems[index], state),
+          );
+        },
+      ),
     );
   }
 
@@ -88,28 +76,28 @@ class SideMenu extends StatelessWidget {
         elevation: 0,
         margin: EdgeInsets.zero,
         child: Builder(
-            builder: (BuildContext context) => ListTile(
-                  title: Text(
-                    data.title,
-                    style: TextStyle(
-                      color: Colors.grey.shade800,
-                    ),
-                  ),
-                  onTap: () {
-                    _handleItemClick(context, data);
-                  },
-                )),
-  );
+          builder: (BuildContext context) => ListTile(
+            title: Text(
+              data.title,
+              style: TextStyle(
+                color: Colors.grey.shade800,
+              ),
+            ),
+            onTap: () {
+              _handleItemClick(context, data);
+            },
+          ),
+        ),
+      );
 
-  /// Tap OnEach item Handler
   void _handleItemClick(BuildContext context, _NavigationItem data) {
     int index = _getIndexFromNavItem(data.item);
-    
-    // เปลี่ยนหน้าโดยใช้ BottomNavCubit
+
+    // Change the selected index using BottomNavCubit
     context.read<BottomNavCubit>().changeSelectedIndex(index);
-    
-    // ปิด Side Menu
-    Navigator.pop(context);
+
+    // Optionally close the side menu if applicable
+    // Navigator.pop(context);
   }
 
   int _getIndexFromNavItem(NavItem item) {

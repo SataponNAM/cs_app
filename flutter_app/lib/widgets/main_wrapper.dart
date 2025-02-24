@@ -6,6 +6,7 @@ import 'package:flutter_app/pages/download/download_page.dart';
 import 'package:flutter_app/pages/download/student_download_page.dart';
 import 'package:flutter_app/pages/main_pages/contact_page.dart';
 import 'package:flutter_app/pages/csb/csb_page.dart';
+import 'package:flutter_app/pages/main_pages/menu_page.dart';
 import 'package:flutter_app/pages/news/news_page.dart';
 import 'package:flutter_app/pages/rule/rule_page.dart';
 import 'package:flutter_app/pages/service/service_page.dart';
@@ -36,6 +37,7 @@ class _MainWrapperState extends State<MainWrapper> {
     ProfessorPage(),
     CoursePage(),
     ContactPage(),
+    MenuPage(),
     CsbPage(),
     NewsPage(),
     DownloadPage(),
@@ -44,7 +46,6 @@ class _MainWrapperState extends State<MainWrapper> {
     RulePage(),
     StudentDownloadPage(),
   ];
-
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +64,7 @@ class _MainWrapperState extends State<MainWrapper> {
             backgroundColor: const Color.fromARGB(255, 255, 255, 255),
             appBar: _mainWrapperAppBar(state),
             body: _mainWrapperBody(context),
-            drawer: SideMenu(),
+            //drawer: SideMenu(),
             bottomNavigationBar: _mainWrapperBottomNavBar(context),
           );
         },
@@ -108,7 +109,9 @@ class _MainWrapperState extends State<MainWrapper> {
         children: [
           const SizedBox(height: 8),
           Icon(
-            context.watch<BottomNavCubit>().state == page ? filledIcon : defaultIcon,
+            context.watch<BottomNavCubit>().state == page
+                ? filledIcon
+                : defaultIcon,
             color: context.watch<BottomNavCubit>().state == page
                 ? Colors.deepPurple.shade400
                 : Colors.grey.shade800,
@@ -146,23 +149,28 @@ class _MainWrapperState extends State<MainWrapper> {
                 _bottomAppBarItem(context,
                     defaultIcon: IconlyLight.home,
                     page: 0,
-                    label: "หน้าหลัก",
+                    label: "Home",
                     filledIcon: IconlyBold.home),
                 _bottomAppBarItem(context,
                     defaultIcon: IconlyLight.user,
                     page: 1,
-                    label: "อาจารย์",
+                    label: "Professor",
                     filledIcon: IconlyBold.user_2),
                 _bottomAppBarItem(context,
                     defaultIcon: IconlyLight.document,
                     page: 2,
-                    label: "หลักสูตร",
+                    label: "Course",
                     filledIcon: IconlyBold.document),
                 _bottomAppBarItem(context,
                     defaultIcon: IconlyLight.call,
                     page: 3,
-                    label: "ติดต่อ",
-                    filledIcon: IconlyBold.call)
+                    label: "Contact",
+                    filledIcon: IconlyBold.call),
+                _bottomAppBarItem(context,
+                    defaultIcon: IconlyLight.more_square,
+                    page: 4,
+                    label: "Menu",
+                    filledIcon: IconlyBold.more_square),
               ],
             ),
           ),
