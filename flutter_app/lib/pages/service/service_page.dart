@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/pages/service/advisor_page.dart';
+import 'package:flutter_app/pages/service/course_procession_page.dart';
+import 'package:flutter_app/pages/service/handbook_page.dart';
 
 class ServicePage extends StatefulWidget {
   const ServicePage({super.key});
@@ -31,7 +34,12 @@ class _ServicePageState extends State<ServicePage> {
               // leading: Icon(Icons.newspaper),
               title: const Text('อาจารย์ที่ปรึกษา', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
               trailing: const Icon(Icons.arrow_forward_ios),
-              onTap: () {}),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const AdvisorPage()),
+                );
+              }),
         ),
 
         const SizedBox(height: 10),
@@ -46,7 +54,12 @@ class _ServicePageState extends State<ServicePage> {
               // leading: Icon(Icons.newspaper),
               title: const Text('คู่มือนักศึกษา', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
               trailing: const Icon(Icons.arrow_forward_ios),
-              onTap: () {}),
+              onTap: () {
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(builder: (context) => const HandbookPage())
+                );
+              }),
         ),
 
         const SizedBox(height: 10),
@@ -61,7 +74,12 @@ class _ServicePageState extends State<ServicePage> {
               // leading: Icon(Icons.newspaper),
               title: const Text('ขบวนวิชา', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
               trailing: const Icon(Icons.arrow_forward_ios),
-              onTap: () {}),
+              onTap: () {
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(builder: (context) => const CourseProcessionPage())
+                );
+              }),
         ),
       ],
     ));

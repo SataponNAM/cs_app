@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/pages/rule/academic_page.dart';
+import 'package:flutter_app/pages/rule/finance_page.dart';
+import 'package:flutter_app/pages/rule/graduate_student_page.dart';
+import 'package:flutter_app/pages/rule/student_affairs_page.dart';
 
 class RulePage extends StatefulWidget {
   const RulePage({super.key});
@@ -32,7 +36,12 @@ class _RulePageState extends State<RulePage> {
               title: const Text('งานการเงิน',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
               trailing: const Icon(Icons.arrow_forward_ios),
-              onTap: () {}),
+              onTap: () {
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(builder: (context) => const FinancePage())
+                );
+              }),
         ),
 
         const SizedBox(height: 10),
@@ -48,7 +57,12 @@ class _RulePageState extends State<RulePage> {
               title: const Text('งานวิชาการ',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
               trailing: const Icon(Icons.arrow_forward_ios),
-              onTap: () {}),
+              onTap: () {
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(builder: (context) => const AcademicPage())
+                );
+              }),
         ),
 
         const SizedBox(height: 10),
@@ -64,7 +78,12 @@ class _RulePageState extends State<RulePage> {
               title: const Text('งานกิจการนักศึกษา',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
               trailing: const Icon(Icons.arrow_forward_ios),
-              onTap: () {}),
+              onTap: () {
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(builder: (context) => const StudentAffairsPage())
+                );
+              }),
         ),
 
         const SizedBox(height: 10),
@@ -80,7 +99,12 @@ class _RulePageState extends State<RulePage> {
               title: const Text('ระดับบัณฑิตศึกษา',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
               trailing: const Icon(Icons.arrow_forward_ios),
-              onTap: () {}),
+              onTap: () {
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(builder: (context) => const GraduateStudentPage())
+                );
+              }),
         ),
       ],
     ));
