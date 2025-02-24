@@ -64,7 +64,7 @@ class _MainWrapperState extends State<MainWrapper> {
             backgroundColor: const Color.fromARGB(255, 255, 255, 255),
             appBar: _mainWrapperAppBar(state),
             body: _mainWrapperBody(context),
-            //drawer: SideMenu(),
+            drawer: SideMenu(),
             bottomNavigationBar: _mainWrapperBottomNavBar(context),
           );
         },

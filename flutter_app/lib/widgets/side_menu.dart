@@ -4,10 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_app/logic/drawer/drawer_bloc.dart';
 
 class _NavigationItem {
+  final Icon icon;
   final NavItem item;
   final String title;
 
-  _NavigationItem(this.item, this.title);
+  _NavigationItem(this.icon, this.item, this.title);
 }
 
 class SideMenu extends StatelessWidget {
@@ -15,28 +16,14 @@ class SideMenu extends StatelessWidget {
 
   final List<_NavigationItem> _listItems = [
     _NavigationItem(
-      NavItem.aboutMenu,
-      "แนะนำภาควิชา",
+      Icon(Icons.people),
+      NavItem.aboutUs,
+      "เกี่ยวกับเรา",
     ),
     _NavigationItem(
-      NavItem.newsMenu,
-      "ข่าวสารและกิจกรรม",
-    ),
-    _NavigationItem(
-      NavItem.csbPage,
-      "โครงการพิเศษ(สองภาษา)",
-    ),
-    _NavigationItem(
-      NavItem.downloadMenu,
-      "ดาวน์โหลด", 
-    ),
-    _NavigationItem(
-      NavItem.serviceMenu,
-      "บริการนักศึกษา/บุคลากร",
-    ),
-    _NavigationItem(
-      NavItem.ruleMenu,
-      "ระเบียบ/ประกาศ",
+      Icon(Icons.settings),
+      NavItem.setting,
+      "ตั้งค่า",
     ),
   ];
 
@@ -89,6 +76,7 @@ class SideMenu extends StatelessWidget {
         margin: EdgeInsets.zero,
         child: Builder(
             builder: (BuildContext context) => ListTile(
+                  leading: data.icon,
                   title: Text(
                     data.title,
                     style: TextStyle(
@@ -114,18 +102,10 @@ class SideMenu extends StatelessWidget {
 
   int _getIndexFromNavItem(NavItem item) {
     switch (item) {
-      case NavItem.csbPage:
+      case NavItem.aboutUs:
         return 5;
-      case NavItem.newsMenu:
+      case NavItem.setting:
         return 6;
-      case NavItem.downloadMenu:
-        return 7;
-      case NavItem.serviceMenu:
-        return 8;
-      case NavItem.aboutMenu:
-        return 9;
-      case NavItem.ruleMenu:
-        return 10;
       default:
         return 0;
     }
