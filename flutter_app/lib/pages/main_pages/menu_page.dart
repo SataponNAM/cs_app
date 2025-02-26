@@ -47,9 +47,8 @@ class _MenuPageState extends State<MenuPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: ListView.builder(
-        padding: EdgeInsets.zero,
+    return ListView.builder(
+        padding: EdgeInsets.only(top: 20),
         itemCount: _listItems.length,
         shrinkWrap: true,
         itemBuilder: (context, index) {
@@ -60,8 +59,7 @@ class _MenuPageState extends State<MenuPage> {
             builder: (context, state) => _buildItem(_listItems[index], state),
           );
         },
-      ),
-    );
+      );
   }
 
   Widget _buildItem(_NavigationItem data, DrawerState state) =>
@@ -76,16 +74,24 @@ class _MenuPageState extends State<MenuPage> {
         elevation: 0,
         margin: EdgeInsets.zero,
         child: Builder(
-          builder: (BuildContext context) => ListTile(
-            title: Text(
-              data.title,
-              style: TextStyle(
-                color: Colors.grey.shade800,
+          builder: (BuildContext context) => Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: Card(
+              shadowColor: Color.fromRGBO(240, 221, 252, 0.612),
+              child: ListTile(
+                title: Text(
+                  data.title,
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey.shade800,
+                  ),
+                ),
+                onTap: () {
+                  _handleItemClick(context, data);
+                },
               ),
             ),
-            onTap: () {
-              _handleItemClick(context, data);
-            },
           ),
         ),
       );

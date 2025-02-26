@@ -76,7 +76,11 @@ class _MainWrapperState extends State<MainWrapper> {
   AppBar _mainWrapperAppBar(DrawerState state) {
     return AppBar(
       backgroundColor: const Color.fromRGBO(243, 237, 247, 100),
-      title: const Text('Logo'),
+      title: Image.asset(
+        'assets/images/logo.png',
+        width: 50,
+      ),
+      centerTitle: true,
     );
   }
 
