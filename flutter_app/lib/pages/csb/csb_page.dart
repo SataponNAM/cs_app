@@ -53,14 +53,25 @@ class _CsbPageState extends State<CsbPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          WebViewWidget(controller: webViewController),
-          if (isLoading)
-            Center(
-              child: CircularProgressIndicator(),
-            ),
-        ],
+      appBar: AppBar(
+          backgroundColor: const Color.fromRGBO(243, 237, 247, 100),
+          title: Image.asset(
+            'assets/images/logo.png',
+            width: 50,
+          ),
+          centerTitle: true,
+        ),
+      body: Padding(
+        padding: const EdgeInsets.only(top: 20),
+        child: Stack(
+          children: [
+            WebViewWidget(controller: webViewController),
+            if (isLoading)
+              Center(
+                child: CircularProgressIndicator(),
+              ),
+          ],
+        ),
       ),
     );
   }

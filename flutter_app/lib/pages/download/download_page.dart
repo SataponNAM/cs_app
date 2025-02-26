@@ -13,59 +13,69 @@ class _DownloadPageState extends State<DownloadPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        padding: const EdgeInsets.only(top: 20),
-        children: [
-          const Center(
-            child: Text(
-              'ดาวน์โหลด', 
-              style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold)
-            ),
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+        appBar: AppBar(
+          backgroundColor: const Color.fromRGBO(243, 237, 247, 100),
+          title: Image.asset(
+            'assets/images/logo.png',
+            width: 50,
           ),
-          
-          const SizedBox(height: 20),
-          Container(
-            padding: const EdgeInsets.all(10),
-            margin: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: Color.fromRGBO(240, 221, 252, 0.612),
-              borderRadius: BorderRadius.circular(20),
+          centerTitle: true,
+        ),
+        body: ListView(
+          padding: const EdgeInsets.only(top: 20),
+          children: [
+            const Center(
+              child: Text('ดาวน์โหลด',
+                  style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold)),
             ),
-            child: ListTile(
-              // leading: Icon(Icons.newspaper),
-              title: const Text('นักศึกษา', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-              trailing: const Icon(Icons.arrow_forward_ios),
-              onTap: () {
-                Navigator.push(
-                  context, 
-                  MaterialPageRoute(builder: (context) => StudentDownloadPage())
-                );
-              },
+            const SizedBox(height: 20),
+            Container(
+              padding: const EdgeInsets.all(10),
+              margin: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: Color.fromRGBO(240, 221, 252, 0.612),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: ListTile(
+                // leading: Icon(Icons.newspaper),
+                title: const Text(
+                  'นักศึกษา',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                trailing: const Icon(Icons.arrow_forward_ios),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => StudentDownloadPage()));
+                },
+              ),
             ),
-          ),
-
-          const SizedBox(height: 10),
-          Container(
-            padding: const EdgeInsets.all(10),
-            margin: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: Color.fromRGBO(240, 221, 252, 0.612),
-              borderRadius: BorderRadius.circular(20),
+            const SizedBox(height: 10),
+            Container(
+              padding: const EdgeInsets.all(10),
+              margin: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: Color.fromRGBO(240, 221, 252, 0.612),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: ListTile(
+                // leading: Icon(Icons.newspaper),
+                title: const Text(
+                  'บุคลากร',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+                trailing: const Icon(Icons.arrow_forward_ios),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => StaffDownloadPage()));
+                },
+              ),
             ),
-            child: ListTile(
-              // leading: Icon(Icons.newspaper),
-              title: const Text('บุคลากร', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-              trailing: const Icon(Icons.arrow_forward_ios),
-              onTap: () {
-                Navigator.push(
-                  context, 
-                  MaterialPageRoute(builder: (context) => StaffDownloadPage())
-                );
-              },
-            ),
-          ),
-        ],
-      )
-    );
+          ],
+        ));
   }
 }
