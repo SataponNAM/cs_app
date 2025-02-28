@@ -65,22 +65,26 @@ class _StudentDownloadPageState extends State<StudentDownloadPage> {
             onLoadError: (controller, url, code, message) {
               print("Error loading page: $message");
             },
-            onDownloadStartRequest: (controller, DownloadStartRequest request) async {
+            onDownloadStartRequest:
+                (controller, DownloadStartRequest request) async {
               //todo download catelog here
               FlutterDownloader.registerCallback(downloadCallback);
               final platform = Theme.of(context).platform;
               bool value = await _checkPermission(platform);
 
-              if(value){
+              if (value) {
                 // await prepareSaveDir();
                 // {
-                  final taskId = await FlutterDownloader.enqueue(
-                    url: request.url.toString(),
-                    savedDir: "/storage/emulated/0/Download",
-                    showNotification: true,
-                    saveInPublicStorage: true,// show download progress in status bar (for Android)
-                    openFileFromNotification: true, // click on notification to open downloaded file (for Android)
-                  );
+                final taskId = await FlutterDownloader.enqueue(
+                  url: request.url.toString(),
+                  savedDir: "/storage/emulated/0/Download",
+                  showNotification:
+                      true, // show download progress in status bar (for Android)
+                  openFileFromNotification:
+                      true, // click on notification to open downloaded file (for Android)
+                  saveInPublicStorage:
+                      true, // show download progress in status bar (for Android)
+                );
                 //}
               }
             },
@@ -121,17 +125,18 @@ class _StudentDownloadPageState extends State<StudentDownloadPage> {
   }
 
   static void downloadCallback(String id, int status, int progress) {
-    final SendPort? send = IsolateNameServer.lookupPortByName('downloader_send_port');
+    final SendPort? send =
+        IsolateNameServer.lookupPortByName('downloader_send_port');
     if (send != null) {
       send.send([id, status, progress]);
     }
 
-    if (status == DownloadTaskStatus.complete.index) {
+    if (status == DownloadTaskStatus.running.index) {
+      print("Downloading... $progress%");
+    } else if (status == DownloadTaskStatus.complete.index) {
       print("Download completed successfully: Task ID $id");
     } else if (status == DownloadTaskStatus.failed.index) {
       print("Download failed: Task ID $id");
     }
   }
-
-
 }

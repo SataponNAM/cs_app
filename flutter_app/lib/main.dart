@@ -14,6 +14,9 @@ Future<void> main() async {
       debug: true, // optional: set to false to disable printing logs to console (default: true)
       ignoreSsl : true // option: set to false to disable working with http links (default: false)
   );
+
+  // Request notification permission
+  await Permission.notification.request();
   
   runApp(
     MultiBlocProvider(
