@@ -49,7 +49,7 @@ class _SideMenuState extends State<SideMenu> {
       setState(() {
         _username = user['username'] ?? 'Guest';
       });
-      print('User: $user');
+      //print('User: $user');
     } else {
       print('ดึงข้อมูลไม่สำเร็จ: ${response.body}');
     }
