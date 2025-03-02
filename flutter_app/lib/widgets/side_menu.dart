@@ -43,6 +43,7 @@ class _SideMenuState extends State<SideMenu> {
         'Authorization': 'Bearer $token',
       },
     );
+    print(token);
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> user = jsonDecode(response.body);
@@ -50,6 +51,18 @@ class _SideMenuState extends State<SideMenu> {
         _username = user['username'] ?? 'Guest';
       });
       //print('User: $user');
+    } else if (response.statusCode == 401) {
+      // Unauthorized, prompt user to log in again
+      print('Token is invalid or expired. Please log in again.');
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.remove('token');
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) => LoginPage(),
+        ),
+        (Route<dynamic> route) => false,
+      );
     } else {
       print('ดึงข้อมูลไม่สำเร็จ: ${response.body}');
     }
@@ -121,7 +134,9 @@ class _SideMenuState extends State<SideMenu> {
 
                 Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(builder: (context) => LoginPage(),),
+                  MaterialPageRoute(
+                    builder: (context) => LoginPage(),
+                  ),
                   (Route<dynamic> route) => false,
                 );
               },

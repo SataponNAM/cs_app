@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/pages/news/news_detail_page.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart' as http;
-import 'package:html/parser.dart' as html;
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -76,12 +76,12 @@ class _HomePageState extends State<HomePage> {
   Widget _buildNewsItem(dynamic item) {
     String baseUrl = item['img_url'] ?? '';
 
-    return FutureBuilder<String>(
+    return FutureBuilder<List<String>>(
       future: fetchImageList(baseUrl),
       builder: (context, snapshot) {
-        String? imageName = snapshot.data;
+        List<String>? imageName = snapshot.data;
         String? imageUrl = (imageName != null && imageName.isNotEmpty) 
-          ? baseUrl + '/' + imageName 
+          ? baseUrl + '/' + imageName[0] 
           : null; // ไม่มีรูปก็ไม่แสดง
 
         return Container(
@@ -103,6 +103,12 @@ class _HomePageState extends State<HomePage> {
                 item['Title'] ?? 'No Title',
                 style: const TextStyle(fontSize: 16),
               ),
+              onTap: () {
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(builder: (context) => NewsDetailPage(newsItem: item, imageName: imageName ?? [],))
+                );
+              },
             ),
           ),
         );
@@ -110,8 +116,8 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Future<String> fetchImageList(String baseUrl) async {
-    if (baseUrl.isEmpty) return ''; // ถ้าไม่มี URL, ไม่ต้องโหลดอะไรเลย
+  Future<List<String>> fetchImageList(String baseUrl) async {
+    if (baseUrl.isEmpty) return []; // ถ้าไม่มี URL, ไม่ต้องโหลดอะไรเลย
 
     try {
       final response = await http.get(Uri.parse(baseUrl));
@@ -128,14 +134,14 @@ class _HomePageState extends State<HomePage> {
           }
         });
 
-        return fileNames.isNotEmpty ? fileNames[0] : ''; // ไม่มีรูปให้คืนค่าเป็น `''`
+        return fileNames.isNotEmpty ? fileNames : []; // ไม่มีรูปให้คืนค่าเป็น `''`
       } else {
         print('Error: HTTP ${response.statusCode}');
-        return '';
+        return [];
       }
     } catch (e) {
       print('Error fetching image list: $e');
-      return '';
+      return [];
     }
   }
 }
