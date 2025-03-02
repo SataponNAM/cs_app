@@ -107,6 +107,8 @@ class _SideMenuState extends State<SideMenu> {
                 ),
               ],
             ),
+
+            // Logout
             const Spacer(),
             ListTile(
               leading: Icon(Icons.logout),
@@ -117,9 +119,10 @@ class _SideMenuState extends State<SideMenu> {
                 await prefs.remove('token');
                 await prefs.remove('username');
 
-                Navigator.pushReplacement(
+                Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(builder: (context) => LoginPage()),
+                  MaterialPageRoute(builder: (context) => LoginPage(),),
+                  (Route<dynamic> route) => false,
                 );
               },
             ),
