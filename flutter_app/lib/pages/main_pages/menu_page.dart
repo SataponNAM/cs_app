@@ -30,8 +30,7 @@ class _MenuPageState extends State<MenuPage> {
     _NavigationItem(NavItem.newsMenu, "ข่าวสารและกิจกรรม", NewsPage()),
     _NavigationItem(NavItem.csbPage, "โครงการพิเศษ(สองภาษา)", CsbPage()),
     _NavigationItem(NavItem.downloadMenu, "ดาวน์โหลด", DownloadPage()),
-    _NavigationItem(
-        NavItem.serviceMenu, "บริการนักศึกษา/บุคลากร", ServicePage()),
+    _NavigationItem(NavItem.serviceMenu, "บริการนักศึกษา", ServicePage()),
     _NavigationItem(NavItem.ruleMenu, "ระเบียบ/ประกาศ", RulePage()),
   ];
 
