@@ -1,5 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_app/pages/auth_page/sign_up_page.dart';
+import 'package:flutter_app/widgets/main_wrapper.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -13,6 +18,34 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  late SharedPreferences logindata;
+  late bool newuser;
+
+  @override
+  void initState() {
+    super.initState();
+    check_if_already_login();
+  }
+
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  void check_if_already_login() async {
+    logindata = await SharedPreferences.getInstance();
+    String? token = logindata.getString('token');
+
+    if (token != null) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => MainWrapper()),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,12 +53,14 @@ class _LoginPageState extends State<LoginPage> {
         padding: EdgeInsets.only(top: 50),
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Color.fromARGB(255, 113, 67, 128), Color.fromARGB(255, 201, 92, 159)],
+            colors: [
+              Color.fromARGB(255, 113, 67, 128),
+              Color.fromARGB(255, 201, 92, 159)
+            ],
             begin: Alignment.topLeft,
             end: Alignment.topRight,
           ),
         ),
-
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -55,13 +90,12 @@ class _LoginPageState extends State<LoginPage> {
                     topRight: Radius.circular(50),
                   ),
                 ),
-
                 child: Form(
                   key: _formKey,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[       
+                    children: <Widget>[
                       // Username
                       const Text(
                         'Username',
@@ -87,7 +121,7 @@ class _LoginPageState extends State<LoginPage> {
                           return null;
                         },
                       ),
-                                  
+
                       const SizedBox(height: 20),
                       // Password
                       const Text(
@@ -115,16 +149,14 @@ class _LoginPageState extends State<LoginPage> {
                           return null;
                         },
                       ),
-                                  
+
                       const SizedBox(height: 45),
                       // Login button
                       ElevatedButton(
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             // Process login
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('Processing Login')),
-                            );
+                            loginUser();
                           }
                         },
                         style: ElevatedButton.styleFrom(
@@ -142,7 +174,7 @@ class _LoginPageState extends State<LoginPage> {
                               fontWeight: FontWeight.bold),
                         ),
                       ),
-                                  
+
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -177,5 +209,37 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  Future<void> loginUser() async {
+    final url = Uri.parse('http://202.44.40.179:3000/auth/login');
+    String username = _usernameController.text;
+    String password = _passwordController.text;
+
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'username': username,
+        'password': password, // แฮชพาสเวิร์ดก่อนส่ง
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      String token = data['token'];
+      print('JWT Token: $token');
+
+      // Save the token in SharedPreferences
+      logindata = await SharedPreferences.getInstance();
+      logindata.setString('token', token);
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => MainWrapper()),
+      );
+    } else {
+      print('ล็อกอินล้มเหลว: ${response.body}');
+    }
   }
 }

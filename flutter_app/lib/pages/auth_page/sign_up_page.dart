@@ -1,6 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_app/pages/auth_page/login_page.dart';
-import 'package:flutter_app/pages/auth_page/sign_up_page.dart';
+import 'package:http/http.dart' as http;
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -11,6 +13,7 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   final _formKey = GlobalKey<FormState>();
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _cfpasswordController = TextEditingController();
@@ -64,8 +67,26 @@ class _SignUpPageState extends State<SignUpPage> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[       
-                      // Username
+                      // Email
                       const SizedBox(height: 10),
+                      TextFormField(
+                        controller: _emailController,
+                        decoration: InputDecoration(
+                          labelText: 'Email',
+                          hintText: 'Enter your Email',
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your email';
+                          }
+                          return null;
+                        },
+                      ),
+
+                      const SizedBox(height: 20),
+                      // Username
                       TextFormField(
                         controller: _usernameController,
                         decoration: InputDecoration(
@@ -116,6 +137,10 @@ class _SignUpPageState extends State<SignUpPage> {
                           if (value == null || value.isEmpty) {
                             return 'Please enter your password';
                           }
+                          if (value != _passwordController.text) {
+                            return 'Password does not match';
+                          }
+
                           return null;
                         },
                       ),
@@ -126,9 +151,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             // Process login
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('Processing Login')),
-                            );
+                            registerUser();
                           }
                         },
                         style: ElevatedButton.styleFrom(
@@ -181,5 +204,29 @@ class _SignUpPageState extends State<SignUpPage> {
         ),
       ),
     );
+  }
+
+  Future<void> registerUser() async {
+    final url = Uri.parse('http://202.44.40.179:3000/auth/register');
+    String email = _emailController.text;
+    String username = _usernameController.text;
+    String password = _passwordController.text;
+    
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'username': username,
+        'password': password, // แฮชพาสเวิร์ดก่อนส่ง
+        'email': email,
+      }),
+    );
+
+    if (response.statusCode == 201) {
+      print('ลงทะเบียนสำเร็จ');
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
+    } else {
+      print('เกิดข้อผิดพลาด: ${response.body}');
+    }
   }
 }
