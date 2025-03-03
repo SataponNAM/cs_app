@@ -58,6 +58,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  // แบ่งตาม type ของข่าว
   List<Widget> _buildNewsSections(List<News> newsList) {
     Map<String, List<News>> categorizedNews = {};
 

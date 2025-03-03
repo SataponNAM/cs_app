@@ -45,10 +45,10 @@ class _DownloadPageState extends State<DownloadPage> {
                 ),
                 trailing: const Icon(Icons.arrow_forward_ios),
                 onTap: () {
-                  Navigator.push(
+                  Navigator.pushNamed(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) => StudentDownloadPage()));
+                      '/downloadStudent'
+                  );
                 },
               ),
             ),
@@ -68,10 +68,10 @@ class _DownloadPageState extends State<DownloadPage> {
                 ),
                 trailing: const Icon(Icons.arrow_forward_ios),
                 onTap: () {
-                  Navigator.push(
+                  Navigator.pushNamed(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) => StaffDownloadPage()));
+                      '/downloadStaff'
+                    );
                 },
               ),
             ),

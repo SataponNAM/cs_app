@@ -45,7 +45,9 @@ class _NewsPageState extends State<NewsPage> {
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   trailing: const Icon(Icons.arrow_forward_ios),
-                  onTap: () {}),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/departmentNews');
+                  }),
             ),
             const SizedBox(height: 10),
             Container(
@@ -62,7 +64,9 @@ class _NewsPageState extends State<NewsPage> {
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   trailing: const Icon(Icons.arrow_forward_ios),
-                  onTap: () {}),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/uniNews');
+                  }),
             ),
             const SizedBox(height: 10),
             Container(
@@ -79,7 +83,9 @@ class _NewsPageState extends State<NewsPage> {
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   trailing: const Icon(Icons.arrow_forward_ios),
-                  onTap: () {}),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/scholarshipNews');
+                  }),
             ),
           ],
         ));

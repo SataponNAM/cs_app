@@ -1,9 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/logic/bottom_nav_cubit.dart';
 import 'package:flutter_app/logic/drawer/drawer_bloc.dart';
+import 'package:flutter_app/pages/about/about_page.dart';
+import 'package:flutter_app/pages/about/support_personnel.dart';
 import 'package:flutter_app/pages/auth_page/login_page.dart';
 import 'package:flutter_app/pages/auth_page/sign_up_page.dart';
+import 'package:flutter_app/pages/csb/csb_page.dart';
 import 'package:flutter_app/pages/download/download_page.dart';
+import 'package:flutter_app/pages/download/staff_download_page.dart';
+import 'package:flutter_app/pages/download/student_download_page.dart';
+import 'package:flutter_app/pages/news/department_news_page.dart';
+import 'package:flutter_app/pages/news/news_page.dart';
+import 'package:flutter_app/pages/news/scholarships_news.dart';
+import 'package:flutter_app/pages/news/university_news.dart';
+import 'package:flutter_app/pages/rule/academic_page.dart';
+import 'package:flutter_app/pages/rule/finance_page.dart';
+import 'package:flutter_app/pages/rule/graduate_student_page.dart';
+import 'package:flutter_app/pages/rule/rule_page.dart';
+import 'package:flutter_app/pages/rule/student_affairs_page.dart';
+import 'package:flutter_app/pages/service/advisor_page.dart';
+import 'package:flutter_app/pages/service/course_procession_page.dart';
+import 'package:flutter_app/pages/service/handbook_page.dart';
+import 'package:flutter_app/pages/service/service_page.dart';
 import 'package:flutter_app/widgets/main_wrapper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
@@ -49,7 +67,31 @@ class MyApp extends StatelessWidget {
         '/': (context) => MainWrapper(),
         '/login': (context) => LoginPage(),
         '/signUp': (context) => SignUpPage(),
+
+        '/aboutCs': (context) => AboutPage(),
+        '/supportPers': (context) => SupportPersonnel(),
+
+        '/newsMenu': (context) => NewsPage(),
+        '/departmentNews': (context) => DepartmentNewsPage(),
+        '/uniNews': (context) => UniversityNews(),
+        '/scholarshipNews': (context) => ScholarshipsNews(),
+
+        '/csb': (context) => CsbPage(),
+
         '/downloadMenu': (context) => DownloadPage(),
+        '/downloadStudent': (context) => StudentDownloadPage(),
+        '/downloadStaff': (context) => StaffDownloadPage(),
+
+        '/servicesMenu': (context) => ServicePage(),
+        '/advisor': (context) => AdvisorPage(),
+        '/handbook': (context) => HandbookPage(),
+        '/courseProcession': (context) => CourseProcessionPage(),
+
+        '/rule': (context) => RulePage(),
+        '/finance': (context) => FinancePage(),
+        '/academic': (context) => AcademicPage(),
+        '/graduateStd': (context) => GraduateStudentPage(),
+        '/stdAffair': (context) => StudentAffairsPage(),
       },
       //home: MainWrapper(),
     );

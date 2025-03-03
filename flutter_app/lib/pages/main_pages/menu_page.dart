@@ -19,19 +19,19 @@ class MenuPage extends StatefulWidget {
 class _NavigationItem {
   final NavItem item;
   final String title;
-  final Widget link;
+  final String link;
 
   _NavigationItem(this.item, this.title, this.link);
 }
 
 class _MenuPageState extends State<MenuPage> {
   final List<_NavigationItem> _listItems = [
-    _NavigationItem(NavItem.aboutMenu, "แนะนำภาควิชา", AboutPage()),
-    _NavigationItem(NavItem.newsMenu, "ข่าวสารและกิจกรรม", NewsPage()),
-    _NavigationItem(NavItem.csbPage, "โครงการพิเศษ(สองภาษา)", CsbPage()),
-    _NavigationItem(NavItem.downloadMenu, "ดาวน์โหลด", DownloadPage()),
-    _NavigationItem(NavItem.serviceMenu, "บริการนักศึกษา", ServicePage()),
-    _NavigationItem(NavItem.ruleMenu, "ระเบียบ/ประกาศ", RulePage()),
+    _NavigationItem(NavItem.aboutMenu, "แนะนำภาควิชา", '/aboutCs'),
+    _NavigationItem(NavItem.newsMenu, "ข่าวสารและกิจกรรม", '/newsMenu'),
+    _NavigationItem(NavItem.csbPage, "โครงการพิเศษ(สองภาษา)", '/csb'),
+    _NavigationItem(NavItem.downloadMenu, "ดาวน์โหลด", '/downloadMenu'),
+    _NavigationItem(NavItem.serviceMenu, "บริการนักศึกษา", '/servicesMenu'),
+    _NavigationItem(NavItem.ruleMenu, "ระเบียบ/ประกาศ", '/rule'),
   ];
 
   @override
@@ -77,8 +77,9 @@ class _MenuPageState extends State<MenuPage> {
                   ),
                 ),
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => data.link));
+                  Navigator.pushNamed(context,
+                      data.link
+                  );
                 },
               ),
             ),

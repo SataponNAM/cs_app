@@ -46,10 +46,9 @@ class _RulePageState extends State<RulePage> {
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                   trailing: const Icon(Icons.arrow_forward_ios),
                   onTap: () {
-                    Navigator.push(
+                    Navigator.pushNamed(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => const FinancePage()));
+                        '/finance');
                   }),
             ),
             const SizedBox(height: 10),
@@ -67,10 +66,9 @@ class _RulePageState extends State<RulePage> {
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                   trailing: const Icon(Icons.arrow_forward_ios),
                   onTap: () {
-                    Navigator.push(
+                    Navigator.pushNamed(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => const AcademicPage()));
+                        '/academic');
                   }),
             ),
             const SizedBox(height: 10),
@@ -88,10 +86,9 @@ class _RulePageState extends State<RulePage> {
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                   trailing: const Icon(Icons.arrow_forward_ios),
                   onTap: () {
-                    Navigator.push(
+                    Navigator.pushNamed(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => const StudentAffairsPage()));
+                        '/stdAffair');
                   }),
             ),
             const SizedBox(height: 10),
@@ -109,10 +106,9 @@ class _RulePageState extends State<RulePage> {
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                   trailing: const Icon(Icons.arrow_forward_ios),
                   onTap: () {
-                    Navigator.push(
+                    Navigator.pushNamed(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => const GraduateStudentPage()));
+                        '/graduateStd');
                   }),
             ),
           ],

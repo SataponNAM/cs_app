@@ -45,10 +45,9 @@ class _ServicePageState extends State<ServicePage> {
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                   trailing: const Icon(Icons.arrow_forward_ios),
                   onTap: () {
-                    Navigator.push(
+                    Navigator.pushNamed(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) => const AdvisorPage()),
+                      '/advisor'
                     );
                   }),
             ),
@@ -67,10 +66,9 @@ class _ServicePageState extends State<ServicePage> {
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                   trailing: const Icon(Icons.arrow_forward_ios),
                   onTap: () {
-                    Navigator.push(
+                    Navigator.pushNamed(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => const HandbookPage()));
+                        '/handbook');
                   }),
             ),
             const SizedBox(height: 10),
@@ -88,11 +86,9 @@ class _ServicePageState extends State<ServicePage> {
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                   trailing: const Icon(Icons.arrow_forward_ios),
                   onTap: () {
-                    Navigator.push(
+                    Navigator.pushNamed(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                const CourseProcessionPage()));
+                        '/courseProcession');
                   }),
             ),
           ],

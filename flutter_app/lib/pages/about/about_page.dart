@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/logic/bottom_nav_cubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AboutPage extends StatefulWidget {
   const AboutPage({super.key});
@@ -58,7 +60,10 @@ class _AboutPageState extends State<AboutPage> {
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   trailing: const Icon(Icons.arrow_forward_ios),
-                  onTap: () {}),
+                  onTap: () {
+                    context.read<BottomNavCubit>().changeSelectedIndex(1);
+                    Navigator.pushNamed(context, '/');
+                  }),
             ),
             const SizedBox(height: 10),
             Container(
@@ -75,7 +80,9 @@ class _AboutPageState extends State<AboutPage> {
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   trailing: const Icon(Icons.arrow_forward_ios),
-                  onTap: () {}),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/supportPers');
+                  }),
             ),
           ],
         ));
