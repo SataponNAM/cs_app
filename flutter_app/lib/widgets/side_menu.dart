@@ -80,27 +80,22 @@ class _SideMenuState extends State<SideMenu> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ListTile(
-              title: _username != null
-                  ? Text(
-                      _username!,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    )
-                  : ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => LoginPage()),
-                        );
-                      },
-                      child: const Text(
-                        "เข้าสู่ระบบ",
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-            ),
+                title: _username != null
+                    ? Text(
+                        _username!,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )
+                    : SizedBox(
+                        width: 50, // กำหนดขนาดโลโก้
+                        height: 50,
+                        child: Image.network(
+                          'http://202.44.40.179/Data_From_Chiab/Image/img/logo.png',
+                          fit: BoxFit.contain, // ปรับให้พอดีกับขนาด
+                        ),
+                      )),
             ListView.builder(
               padding: EdgeInsets.zero,
               itemCount: _listItems.length,
@@ -109,17 +104,11 @@ class _SideMenuState extends State<SideMenu> {
                 return BlocBuilder<DrawerBloc, DrawerState>(
                   buildWhen: (previous, current) =>
                       previous.selectedItem != current.selectedItem,
-                  builder: (context, state) => _buildItem(_listItems[index], state),
+                  builder: (context, state) =>
+                      _buildItem(_listItems[index], state),
                 );
               },
             ),
-            const Spacer(),
-            if (_username != null)
-              ListTile(
-                leading: Icon(Icons.logout),
-                title: const Text("ออกจากระบบ"),
-                onTap: _logout,
-              ),
           ],
         ),
       ),

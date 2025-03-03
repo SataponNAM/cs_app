@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
 class HttpService {
+  
   Future<List<News>> fetchNews({required String strUrl}) async {
     debugPrint('url: $strUrl');
     try {

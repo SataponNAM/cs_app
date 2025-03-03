@@ -7,6 +7,7 @@ import 'package:flutter_app/pages/main_pages/menu_page.dart';
 import 'package:flutter_app/widgets/side_menu.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconly/iconly.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../pages/main_pages/pages.dart';
 
@@ -19,11 +20,13 @@ class MainWrapper extends StatefulWidget {
 
 class _MainWrapperState extends State<MainWrapper> {
   late DrawerBloc _drawerBloc;
+  bool isLogin = false;
 
   @override
   void initState() {
     super.initState();
     _drawerBloc = DrawerBloc();
+    checkIsLogin();
   }
 
   final List<Widget> topLevelPages = const [
@@ -34,6 +37,23 @@ class _MainWrapperState extends State<MainWrapper> {
     MenuPage(),
     AboutUsPage()
   ];
+
+  Future<void> checkIsLogin() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    String? token = prefs.getString('token');
+    if (token != null && token.isNotEmpty) {
+      print("login");
+      setState(() {
+        isLogin = true;
+      });
+    }
+  }
+
+  Future<void> _logout() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('token');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,6 +89,26 @@ class _MainWrapperState extends State<MainWrapper> {
         width: 50,
       ),
       centerTitle: true,
+      actions: [
+        isLogin
+            ? IconButton(
+                onPressed: () {
+                  print("logout");
+                  setState(() {
+                    isLogin = false; // อัปเดตสถานะหลัง logout
+                  });
+                  _logout();
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, '/', (route) => false);
+                },
+                icon: Icon(Icons.logout))
+            : IconButton(
+                onPressed: () {
+                  print("login");
+                  Navigator.pushNamed(context, '/login');
+                },
+                icon: Icon(Icons.login))
+      ],
     );
   }
 

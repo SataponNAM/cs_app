@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/logic/bottom_nav_cubit.dart';
 import 'package:flutter_app/logic/drawer/drawer_bloc.dart';
 import 'package:flutter_app/pages/auth_page/login_page.dart';
+import 'package:flutter_app/pages/auth_page/sign_up_page.dart';
+import 'package:flutter_app/pages/download/download_page.dart';
 import 'package:flutter_app/widgets/main_wrapper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
@@ -42,7 +44,14 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: MainWrapper(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => MainWrapper(),
+        '/login': (context) => LoginPage(),
+        '/signUp': (context) => SignUpPage(),
+        '/downloadMenu': (context) => DownloadPage(),
+      },
+      //home: MainWrapper(),
     );
   }
 }
