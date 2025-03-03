@@ -43,8 +43,23 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : ListView(children: _buildNewsSections());
+        ? const Center(child: CircularProgressIndicator())
+        : Column(
+            children: [
+              Expanded(
+                child: ListView(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(15),
+                        child: Image.network(
+                            'http://202.44.40.179/Data_From_Chiab/Image/img/welcome-cis.jpg')
+                    ),
+                    ..._buildNewsSections()
+                  ],
+                ),
+              ),
+            ],
+          );
   }
 
   List<Widget> _buildNewsSections() {
@@ -52,6 +67,7 @@ class _HomePageState extends State<HomePage> {
 
     for (var item in news) {
       String type = item['type'] ?? 'Uncategorized';
+      if (type == '0') continue; // Skip items with type '0'
       if (!categorizedNews.containsKey(type)) {
         categorizedNews[type] = [];
       }
@@ -67,7 +83,8 @@ class _HomePageState extends State<HomePage> {
           style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
       ));
-      sections.addAll(items.map((item) => _buildNewsItem(item)).toList());
+      sections
+          .addAll(items.take(3).map((item) => _buildNewsItem(item)).toList());
     });
 
     return sections;
@@ -80,9 +97,9 @@ class _HomePageState extends State<HomePage> {
       future: fetchImageList(baseUrl),
       builder: (context, snapshot) {
         List<String>? imageName = snapshot.data;
-        String? imageUrl = (imageName != null && imageName.isNotEmpty) 
-          ? baseUrl + '/' + imageName[0] 
-          : null; // ไม่มีรูปก็ไม่แสดง
+        String? imageUrl = (imageName != null && imageName.isNotEmpty)
+            ? baseUrl + '/' + imageName[0]
+            : null; // ไม่มีรูปก็ไม่แสดง
 
         return Container(
           //height: 150,
@@ -98,16 +115,20 @@ class _HomePageState extends State<HomePage> {
                       errorBuilder: (context, error, stackTrace) =>
                           const Icon(Icons.image_not_supported),
                     )
-                  : const SizedBox(width: 100, height: 100), // ถ้าไม่มีรูป ให้เว้นที่ว่าง
+                  : const SizedBox(
+                      width: 100, height: 100), // ถ้าไม่มีรูป ให้เว้นที่ว่าง
               title: Text(
                 item['Title'] ?? 'No Title',
                 style: const TextStyle(fontSize: 16),
               ),
               onTap: () {
                 Navigator.push(
-                  context, 
-                  MaterialPageRoute(builder: (context) => NewsDetailPage(newsItem: item, imageName: imageName ?? [],))
-                );
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => NewsDetailPage(
+                              newsItem: item,
+                              imageName: imageName ?? [],
+                            )));
               },
             ),
           ),
@@ -134,7 +155,9 @@ class _HomePageState extends State<HomePage> {
           }
         });
 
-        return fileNames.isNotEmpty ? fileNames : []; // ไม่มีรูปให้คืนค่าเป็น `''`
+        return fileNames.isNotEmpty
+            ? fileNames
+            : []; // ไม่มีรูปให้คืนค่าเป็น `''`
       } else {
         print('Error: HTTP ${response.statusCode}');
         return [];

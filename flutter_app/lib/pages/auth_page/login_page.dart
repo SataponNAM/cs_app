@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/pages/auth_page/sign_up_page.dart';
 import 'package:flutter_app/widgets/main_wrapper.dart';
@@ -92,9 +93,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 child: Form(
                   key: _formKey,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                  child: ListView(
                     children: <Widget>[
                       // Username
                       const Text(
@@ -211,6 +210,12 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  String hashPassword(String password) {
+    var bytes = utf8.encode(password);
+    var hashed = sha256.convert(bytes);
+    return hashed.toString();
+  }
+
   Future<void> loginUser() async {
     final url = Uri.parse('http://202.44.40.179:3000/auth/login');
     String username = _usernameController.text;
@@ -221,7 +226,7 @@ class _LoginPageState extends State<LoginPage> {
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         'username': username,
-        'password': password, // แฮชพาสเวิร์ดก่อนส่ง
+        'password': hashPassword(password), // แฮชพาสเวิร์ดก่อนส่ง
       }),
     );
 
