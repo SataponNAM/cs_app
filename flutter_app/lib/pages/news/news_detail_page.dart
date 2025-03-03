@@ -35,7 +35,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                     ? ClipRRect(
                         borderRadius: BorderRadius.circular(10),
                         child: Image.network(
-                          imgUrl.first,
+                          imgUrl[0],
                           fit: BoxFit.cover,
                           width: double.infinity,
                         ),
@@ -59,13 +59,13 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                       ),
               const SizedBox(height: 20),
               Text(
-                widget.newsItem['Title'] ?? 'No Title',
+                widget.newsItem.Title ?? 'No Title',
                 style:
                     const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 16),
               Text(
-                widget.newsItem['Message'] ?? 'No Content',
+                widget.newsItem.Message ?? 'No Content',
                 style: TextStyle(fontSize: 18),
               ),
             ],
@@ -77,11 +77,31 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
 
   Future<void> getImageUrl() async {
     print("get img url");
-    for (String imgName in widget.imageName) {
-      var imgurl = widget.newsItem['img_url'] + '/' + imgName;
+    print("length ${widget.imageName.length}");
 
-      //print(imgurl);
-      imgUrl.add(imgurl);
+    List<String> tempUrls = [];
+
+    // ตรวจสอบว่า widget.newsItem เป็น Map หรือ Object
+    String? baseImgUrl;
+    if (widget.newsItem is Map) {
+      baseImgUrl = widget.newsItem['img_url'];
+    } else {
+      baseImgUrl = widget.newsItem.img_url;
     }
+
+    if (baseImgUrl == null || baseImgUrl.isEmpty) {
+      //print("Error: img_url is null or empty");
+      return;
+    }
+
+    for (String imgName in widget.imageName) {
+      var imgurl = "$baseImgUrl/$imgName";
+      //print("get img url: $imgurl");
+      tempUrls.add(imgurl);
+    }
+
+    setState(() {
+      imgUrl = tempUrls;
+    });
   }
 }

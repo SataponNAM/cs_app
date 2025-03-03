@@ -1,8 +1,7 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/models/news_model.dart';
 import 'package:flutter_app/pages/news/news_detail_page.dart';
-import 'package:html/parser.dart';
-import 'package:http/http.dart' as http;
+import 'package:flutter_app/services/http_service.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -12,62 +11,59 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<dynamic> news = [];
-  bool isLoading = true;
+  final HttpService httpService = HttpService();
+  static const String baseUrl = 'http://202.44.40.179:3000/posts';
+
+  late Future<List<News>> futureNews;
 
   @override
   void initState() {
     super.initState();
-    fetchNews();
-  }
-
-  Future<void> fetchNews() async {
-    final url = Uri.parse('http://202.44.40.179:3000/posts');
-    try {
-      final response = await http.get(url);
-      if (response.statusCode == 200) {
-        setState(() {
-          news = jsonDecode(response.body);
-          isLoading = false;
-        });
-      } else {
-        print('Failed to load news: ${response.body}');
-        setState(() => isLoading = false);
-      }
-    } catch (e) {
-      print('Error fetching news: $e');
-      setState(() => isLoading = false);
-    }
+    futureNews = httpService.fetchNews(strUrl: baseUrl);
   }
 
   @override
   Widget build(BuildContext context) {
-    return isLoading
-        ? const Center(child: CircularProgressIndicator())
-        : Column(
+    return FutureBuilder<List<News>>(
+      future: futureNews,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Center(child: Text("Error: ${snapshot.error}"));
+        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          return const Center(child: Text("No news available"));
+        } else {
+          List<News> newsList = snapshot.data!;
+          return Column(
             children: [
               Expanded(
                 child: ListView(
                   children: [
                     Container(
-                      padding: EdgeInsets.all(15),
-                        child: Image.network(
-                            'http://202.44.40.179/Data_From_Chiab/Image/img/welcome-cis.jpg')
+                      padding: const EdgeInsets.all(15),
+                      child: Image.network(
+                        'http://202.44.40.179/Data_From_Chiab/Image/img/welcome-cis.jpg',
+                      ),
                     ),
-                    ..._buildNewsSections()
+                    ..._buildNewsSections(newsList),
                   ],
                 ),
               ),
             ],
           );
+        }
+      },
+    );
   }
 
-  List<Widget> _buildNewsSections() {
-    Map<String, List<dynamic>> categorizedNews = {};
+  List<Widget> _buildNewsSections(List<News> newsList) {
+    Map<String, List<News>> categorizedNews = {};
 
-    for (var item in news) {
-      String type = item['type'] ?? 'Uncategorized';
-      if (type == '0') continue; // Skip items with type '0'
+    for (var item in newsList) {
+      print(item.type);
+      String type = item.type ?? 'Uncategorized';
+      if (type == '0') continue;
       if (!categorizedNews.containsKey(type)) {
         categorizedNews[type] = [];
       }
@@ -83,31 +79,39 @@ class _HomePageState extends State<HomePage> {
           style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
       ));
-      sections
-          .addAll(items.take(3).map((item) => _buildNewsItem(item)).toList());
+      sections.addAll(items.take(3).map((item) => _buildNewsItem(item)));
     });
 
     return sections;
   }
 
-  Widget _buildNewsItem(dynamic item) {
-    String baseUrl = item['img_url'] ?? '';
-
+  Widget _buildNewsItem(News item) {
     return FutureBuilder<List<String>>(
-      future: fetchImageList(baseUrl),
+      future: httpService.fetchImageList(item.img_url),
       builder: (context, snapshot) {
-        List<String>? imageName = snapshot.data;
-        String? imageUrl = (imageName != null && imageName.isNotEmpty)
-            ? baseUrl + '/' + imageName[0]
-            : null; // ไม่มีรูปก็ไม่แสดง
+        String imageUrl = snapshot.hasData && snapshot.data!.isNotEmpty
+            ? '${item.img_url}/${snapshot.data![0]}'
+            : ''; // Set empty string if null
 
-        return Container(
-          //height: 150,
-          padding: EdgeInsets.only(top: 10, bottom: 10),
-          child: Center(
-            child: ListTile(
-              leading: imageUrl != null
-                  ? Image.network(
+        return GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => NewsDetailPage(
+                    newsItem: item, imageName: (snapshot.data ?? []).cast<String>()),
+              ),
+            );
+          },
+          child: Card(
+            margin: const EdgeInsets.all(10),
+            child: Padding(
+              padding: const EdgeInsets.all(8),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  if (imageUrl.isNotEmpty)
+                    Image.network(
                       imageUrl,
                       width: 100,
                       height: 100,
@@ -115,56 +119,33 @@ class _HomePageState extends State<HomePage> {
                       errorBuilder: (context, error, stackTrace) =>
                           const Icon(Icons.image_not_supported),
                     )
-                  : const SizedBox(
-                      width: 100, height: 100), // ถ้าไม่มีรูป ให้เว้นที่ว่าง
-              title: Text(
-                item['Title'] ?? 'No Title',
-                style: const TextStyle(fontSize: 16),
+                  else
+                    const Icon(Icons.image_not_supported, size: 100),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          item.Title,
+                          style: const TextStyle(fontSize: 15),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          item.PostDate,
+                          style: const TextStyle(fontSize: 14),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => NewsDetailPage(
-                              newsItem: item,
-                              imageName: imageName ?? [],
-                            )));
-              },
             ),
           ),
         );
       },
     );
-  }
-
-  Future<List<String>> fetchImageList(String baseUrl) async {
-    if (baseUrl.isEmpty) return []; // ถ้าไม่มี URL, ไม่ต้องโหลดอะไรเลย
-
-    try {
-      final response = await http.get(Uri.parse(baseUrl));
-
-      if (response.statusCode == 200) {
-        var document = parse(response.body);
-        List<String> fileNames = [];
-
-        document.querySelectorAll('a').forEach((element) {
-          String? href = element.attributes['href'];
-
-          if (href != null && RegExp(r'\.(png|jpg|jpeg)$').hasMatch(href)) {
-            fileNames.add(href);
-          }
-        });
-
-        return fileNames.isNotEmpty
-            ? fileNames
-            : []; // ไม่มีรูปให้คืนค่าเป็น `''`
-      } else {
-        print('Error: HTTP ${response.statusCode}');
-        return [];
-      }
-    } catch (e) {
-      print('Error fetching image list: $e');
-      return [];
-    }
   }
 }
