@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/models/news_model.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 class HttpService {
   Future<List<News>> fetchNews({required String strUrl}) async {
@@ -20,7 +21,7 @@ class HttpService {
 
         debugPrint('Response Body: ${response.body}');
 
-        return data.map((e) {
+        List<News> newsList = data.map((e) {
           try {
             return News.fromJson(e);
           } catch (error) {
@@ -28,12 +29,32 @@ class HttpService {
             return News(
               Title: "No Title",
               Message: "No message available",
-              PostDate: "Unknown Date",
+              PostDate: "01/01/1970", // ใช้วันที่เริ่มต้นแทน Unknown Date
               type: "Uncategorized",
               img_url: "",
             );
           }
         }).toList();
+
+        // เรียงลำดับจากใหม่ -> เก่า (ล่าสุดมาก่อน)
+        final DateFormat formatter = DateFormat("dd/MM/yyyy");
+        newsList.sort((a, b) {
+          DateTime dateA;
+          DateTime dateB;
+          try {
+            dateA = formatter.parse(a.PostDate);
+          } catch (e) {
+            dateA = DateTime(1970); // ถ้าแปลงไม่ได้ ใช้ค่าเริ่มต้น
+          }
+          try {
+            dateB = formatter.parse(b.PostDate);
+          } catch (e) {
+            dateB = DateTime(1970);
+          }
+          return dateB.compareTo(dateA); // เรียงจากใหม่ไปเก่า
+        });
+
+        return newsList;
       } else {
         debugPrint('Failed loading data!');
         throw Exception('Failed to load data!');
@@ -44,6 +65,7 @@ class HttpService {
     }
   }
 
+  // Load Image Url
   Future<List<String>> fetchImageList(String baseUrl) async {
     if (baseUrl.isEmpty) return []; // ถ้าไม่มี URL, ไม่ต้องโหลดอะไรเลย
 

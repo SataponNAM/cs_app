@@ -35,6 +35,7 @@ class _HomePageState extends State<HomePage> {
           return const Center(child: Text("No news available"));
         } else {
           List<News> newsList = snapshot.data!;
+          
           return Column(
             children: [
               Expanded(
@@ -79,7 +80,7 @@ class _HomePageState extends State<HomePage> {
           style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
       ));
-      sections.addAll(items.take(3).map((item) => _buildNewsItem(item)));
+      sections.addAll(items.take(3).map((item) => _buildNewsItem(item))); // เอามาแสดง 3 ข่าว
     });
 
     return sections;

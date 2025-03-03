@@ -51,6 +51,7 @@ dependencies:
   html: ^0.15.5
   carousel_slider: ^5.0.0
   crypto: ^3.0.6
+  intl: ^0.20.2
 
 dev_dependencies:
   flutter_test:
