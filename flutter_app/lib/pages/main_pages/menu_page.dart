@@ -20,68 +20,98 @@ class _NavigationItem {
 
 class _MenuPageState extends State<MenuPage> {
   final List<_NavigationItem> _listItems = [
-    _NavigationItem(NavItem.aboutMenu, "แนะนำภาควิชา", '/aboutCs', Icons.info),
-    _NavigationItem(NavItem.newsMenu, "ข่าวสารและกิจกรรม", '/newsMenu', Icons.event),
-    _NavigationItem(NavItem.csbPage, "โครงการพิเศษ", '/csb', Icons.language),
-    _NavigationItem(NavItem.downloadMenu, "ดาวน์โหลด", '/downloadMenu', Icons.download),
-    _NavigationItem(NavItem.serviceMenu, "บริการนักศึกษา", '/servicesMenu', Icons.school),
-    _NavigationItem(NavItem.ruleMenu, "ระเบียบ/ประกาศ", '/rule', Icons.rule),
+    _NavigationItem(NavItem.aboutMenu, "แนะนำภาควิชา", '/aboutCs', Icons.info_outline_rounded),
+    _NavigationItem(NavItem.newsMenu, "ข่าวสารและกิจกรรม", '/newsMenu', Icons.event_note_rounded),
+    _NavigationItem(NavItem.csbPage, "โครงการพิเศษ", '/csb', Icons.language_rounded),
+    _NavigationItem(NavItem.downloadMenu, "ดาวน์โหลด", '/downloadMenu', Icons.download_rounded),
+    _NavigationItem(NavItem.serviceMenu, "บริการนักศึกษา", '/servicesMenu', Icons.school_rounded),
+    _NavigationItem(NavItem.ruleMenu, "ระเบียบ/ประกาศ", '/rule', Icons.rule_rounded),
   ];
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      padding: EdgeInsets.all(10),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        mainAxisExtent: 100,
-        crossAxisCount: 2,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
-      ),
-      itemCount: _listItems.length,
-      itemBuilder: (context, index) {
-        return BlocBuilder<DrawerBloc, DrawerState>(
-          buildWhen: (previous, current) {
-            return previous.selectedItem != current.selectedItem;
-          },
-          builder: (context, state) => _buildItem(_listItems[index], state),
-        );
-      },
-    );
+    return Container(
+        // decoration: BoxDecoration(
+        //   gradient: LinearGradient(
+        //     begin: Alignment.topCenter,
+        //     end: Alignment.bottomCenter,
+        //     colors: [
+        //       Colors.deepPurple[500]!,
+        //       //Colors.deepPurple[300]!,
+        //       Color.fromARGB(255, 201, 92, 159)
+        //     ],
+        //   ),
+        // ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 16,
+              mainAxisSpacing: 16,
+              childAspectRatio: 0.9,
+            ),
+            itemCount: _listItems.length,
+            itemBuilder: (context, index) {
+              return BlocBuilder<DrawerBloc, DrawerState>(
+                buildWhen: (previous, current) {
+                  return previous.selectedItem != current.selectedItem;
+                },
+                builder: (context, state) => _buildItem(_listItems[index], state),
+              );
+            },
+          ),
+        ),
+      );
   }
 
   Widget _buildItem(_NavigationItem data, DrawerState state) => _makeListItem(data, state);
 
-  Widget _makeListItem(_NavigationItem data, DrawerState state) => Container(
-        child: Builder(
-          builder: (BuildContext context) => InkWell(
-            onTap: () {
-              // Handle the tap event here
-              Navigator.pushNamed(context, data.link);
-            },
-            child: Card(
-              shadowColor: Color.fromRGBO(240, 221, 252, 0.612),
-              child: Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Icon(data.icon, color: Colors.grey.shade800, size: 30),
-                    const SizedBox(height: 8),
-                    Expanded(
-                      child: Text(
-                        data.title,
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.grey.shade800,
-                        ),
-                      ),
-                    ),
-                  ],
+  Widget _makeListItem(_NavigationItem data, DrawerState state) => GestureDetector(
+        onTap: () {
+          Navigator.pushNamed(context, data.link);
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(15),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                spreadRadius: 1,
+                blurRadius: 10,
+                offset: Offset(0, 5),
+              ),
+            ],
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                padding: EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                  color: Colors.deepPurple[100]!.withOpacity(0.5),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  data.icon,
+                  color: Colors.deepPurple[700],
+                  size: 40,
                 ),
               ),
-            ),
+              SizedBox(height: 15),
+              Text(
+                data.title,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.deepPurple[800],
+                ),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ],
           ),
         ),
       );

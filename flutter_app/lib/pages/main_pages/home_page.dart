@@ -29,42 +29,124 @@ class _HomePageState extends State<HomePage> {
       future: futureNews,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
+          return Center(
+            child: CircularProgressIndicator(
+              color: Colors.deepPurple[500],
+            ),
+          );
         } else if (snapshot.hasError) {
-          return Center(child: Text("Error: ${snapshot.error}"));
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.error_outline,
+                  color: Colors.red,
+                  size: 80,
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  "Error loading news",
+                  style: TextStyle(
+                    color: Colors.grey[700],
+                    fontSize: 18,
+                  ),
+                ),
+                Text(
+                  "${snapshot.error}",
+                  style: TextStyle(
+                    color: Colors.grey[600],
+                    fontSize: 14,
+                  ),
+                ),
+              ],
+            ),
+          );
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return const Center(child: Text("No news available"));
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.newspaper,
+                  color: Colors.grey[400],
+                  size: 80,
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  "No news available",
+                  style: TextStyle(
+                    color: Colors.grey[600],
+                    fontSize: 18,
+                  ),
+                ),
+              ],
+            ),
+          );
         } else {
           List<News> newsList = snapshot.data!;
 
-          return Column(
-            children: [
-              Expanded(
-                child: ListView(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(15),
-                      child: Image.network(
-                        'http://202.44.40.179/Data_From_Chiab/Image/img/welcome-cis.jpg',
-                      ),
-                    ),
-                    ..._buildNewsSections(newsList),
-                  ],
+          return RefreshIndicator(
+            color: Colors.deepPurple[500],
+            onRefresh: () async {
+              setState(() {
+                futureNews = httpService.fetchNews(strUrl: baseUrl);
+              });
+            },
+            child: CustomScrollView(
+              slivers: [
+                SliverToBoxAdapter(
+                  child: _buildHeaderImage(),
                 ),
-              ),
-            ],
+                ..._buildNewsSections(newsList),
+              ],
+            ),
           );
         }
       },
     );
   }
 
-  // แบ่งตาม type ของข่าว
+  // รูป banner
+  Widget _buildHeaderImage() {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(15),
+        child: Image.network(
+          'http://202.44.40.179/Data_From_Chiab/Image/img/welcome-cis.jpg',
+          fit: BoxFit.fitWidth,
+          width: double.infinity,
+          height: 200,
+          loadingBuilder: (context, child, loadingProgress) {
+            if (loadingProgress == null) return child;
+            return Center(
+              child: CircularProgressIndicator(
+                color: Colors.deepPurple[500],
+                value: loadingProgress.expectedTotalBytes != null
+                    ? loadingProgress.cumulativeBytesLoaded /
+                        loadingProgress.expectedTotalBytes!
+                    : null,
+              ),
+            );
+          },
+          errorBuilder: (context, error, stackTrace) => Container(
+            color: Colors.grey[200],
+            child: Icon(
+              Icons.image_not_supported,
+              color: Colors.grey[600],
+              size: 80,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   List<Widget> _buildNewsSections(List<News> newsList) {
     Map<String, List<News>> categorizedNews = {};
 
     for (var item in newsList) {
-      print(item.type);
       String type = item.type ?? 'Uncategorized';
       if (type == '0') continue;
       if (!categorizedNews.containsKey(type)) {
@@ -75,16 +157,28 @@ class _HomePageState extends State<HomePage> {
 
     List<Widget> sections = [];
     categorizedNews.forEach((type, items) {
-      sections.add(Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Text(
-          type,
-          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+      sections.add(SliverToBoxAdapter(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: Text(
+            type,
+            style: TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+              color: Colors.deepPurple[700],
+            ),
+          ),
         ),
       ));
-      sections.addAll(items
-          .take(3)
-          .map((item) => _buildNewsItem(item))); // เอามาแสดง 3 ข่าว
+
+      sections.add(
+        SliverList(
+          delegate: SliverChildBuilderDelegate(
+            (context, index) => _buildNewsItem(items[index]),
+            childCount: items.take(3).length,
+          ),
+        ),
+      );
     });
 
     return sections;
@@ -96,13 +190,13 @@ class _HomePageState extends State<HomePage> {
       builder: (context, snapshot) {
         String imageUrl = snapshot.hasData && snapshot.data!.isNotEmpty
             ? '${item.img_url}/${snapshot.data![0]}'
-            : ''; // Set empty string if null
+            : '';
 
-        // แปลงวันที่
         DateTime postDate = DateFormat('dd/MM/yyyy').parse(item.PostDate);
         String formattedDate = DateFormat('d MMMM yyyy', 'th').format(postDate);
-        int thaiYear = postDate.year + 543; // Convert to Thai year (Buddhist Era)
-        String thaiFormattedDate = formattedDate.replaceFirst(postDate.year.toString(), thaiYear.toString());
+        int thaiYear = postDate.year + 543;
+        String thaiFormattedDate = formattedDate.replaceFirst(
+            postDate.year.toString(), thaiYear.toString());
 
         return GestureDetector(
           onTap: () {
@@ -110,52 +204,81 @@ class _HomePageState extends State<HomePage> {
               context,
               MaterialPageRoute(
                 builder: (context) => NewsDetailPage(
-                    newsItem: item,
-                    imageName: (snapshot.data ?? []).cast<String>()),
+                  newsItem: item,
+                  imageName: (snapshot.data ?? []).cast<String>(),
+                ),
               ),
             );
           },
-          child: Card(
-            margin: const EdgeInsets.all(10),
-            child: Padding(
-              padding: const EdgeInsets.all(8),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  if (imageUrl.isNotEmpty)
-                    Image.network(
-                      imageUrl,
-                      width: 100,
-                      height: 100,
-                      fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) =>
-                          const Icon(Icons.image_not_supported),
-                    )
-                  else
-                    const Icon(Icons.image_not_supported, size: 100),
-                  const SizedBox(width: 10),
-                  Expanded(
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(15),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.shade300,
+                  blurRadius: 10,
+                  offset: const Offset(0, 5),
+                ),
+              ],
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ClipRRect(
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(15),
+                    bottomLeft: Radius.circular(15),
+                  ),
+                  child: imageUrl.isNotEmpty
+                      ? Image.network(
+                          imageUrl,
+                          width: 120,
+                          height: 120,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) =>
+                              const Icon(Icons.image_not_supported),
+                        )
+                      : Container(
+                          width: 120,
+                          height: 120,
+                          color: Colors.grey[200],
+                          child: Icon(
+                            Icons.image_not_supported,
+                            color: Colors.grey[600],
+                          ),
+                        ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(12),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           item.Title,
-                          style: const TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.w500),
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.deepPurple[800],
+                          ),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
-                        const SizedBox(height: 5),
+                        const SizedBox(height: 8),
                         Text(
                           thaiFormattedDate,
-                          //item.PostDate,
-                          style: const TextStyle(fontSize: 14),
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey[600],
+                          ),
                         ),
                       ],
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         );
