@@ -8,104 +8,179 @@ class NewsPage extends StatefulWidget {
 }
 
 class _NewsPageState extends State<NewsPage> {
+  // News categories with routes and icons
+  final List<Map<String, dynamic>> _newsCategories = [
+    {
+      'title': 'ข่าวภาควิชา',
+      'route': '/departmentNews',
+      'icon': Icons.account_balance_outlined,
+    },
+    {
+      'title': 'ข่าวคณะและมหาวิทยาลัย',
+      'route': '/uniNews',
+      'icon': Icons.school_outlined,
+    },
+    {
+      'title': 'ข่าวทุนการศึกษา',
+      'route': '/scholarshipNews',
+      'icon': Icons.card_membership_outlined,
+    },
+    {
+      'title': 'ข่าวรับสมัครงาน-ประชาสัมพันธ์',
+      'route': '/rescruitmentNews',
+      'icon': Icons.work_outline,
+    },
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-        appBar: AppBar(
-          backgroundColor: const Color.fromRGBO(243, 237, 247, 100),
-          title: Image.asset(
-            'assets/images/logo.png',
-            width: 50,
-          ),
-          centerTitle: true,
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.white,
+        title: Image.asset(
+          'assets/images/logo.png',
+          width: 70,
         ),
-        body: ListView(
-          padding: const EdgeInsets.only(top: 20),
-          children: [
-            const Center(
-              child: Text(
-                'ข่าวสารและกิจกรรม',
-                style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
-              ),
-            ),
-            const SizedBox(height: 20),
-            Container(
-              padding: const EdgeInsets.all(10),
-              margin: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: Color.fromRGBO(240, 221, 252, 0.612),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: ListTile(
-                  // leading: Icon(Icons.newspaper),
-                  title: const Text(
-                    'ข่าวภาควิชา',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        centerTitle: true,
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: Text(
+                  'ข่าวสารและกิจกรรม',
+                  style: TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.deepPurple.shade800,
                   ),
-                  trailing: const Icon(Icons.arrow_forward_ios),
-                  onTap: () {
-                    Navigator.pushNamed(context, '/departmentNews');
-                  }),
-            ),
-            const SizedBox(height: 10),
-            Container(
-              padding: const EdgeInsets.all(10),
-              margin: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: Color.fromRGBO(240, 221, 252, 0.612),
-                borderRadius: BorderRadius.circular(20),
+                ),
               ),
-              child: ListTile(
-                  // leading: Icon(Icons.newspaper),
-                  title: const Text(
-                    'ข่าวคณะและมหาวิทยาลัย',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  trailing: const Icon(Icons.arrow_forward_ios),
-                  onTap: () {
-                    Navigator.pushNamed(context, '/uniNews');
-                  }),
-            ),
-            const SizedBox(height: 10),
-            Container(
-              padding: const EdgeInsets.all(10),
-              margin: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: Color.fromRGBO(240, 221, 252, 0.612),
-                borderRadius: BorderRadius.circular(20),
+              const SizedBox(height: 24),
+              
+              // Department News Card
+              _buildMenuCard(
+                context,
+                title: 'ข่าวภาควิชา',
+                icon: Icons.account_balance_outlined,
+                onTap: () {
+                  Navigator.pushNamed(context, '/departmentNews');
+                },
               ),
-              child: ListTile(
-                  // leading: Icon(Icons.newspaper),
-                  title: const Text(
-                    'ข่าวทุนการศึกษา',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  trailing: const Icon(Icons.arrow_forward_ios),
-                  onTap: () {
-                    Navigator.pushNamed(context, '/scholarshipNews');
-                  }),
-            ),
-            const SizedBox(height: 10),
-            Container(
-              padding: const EdgeInsets.all(10),
-              margin: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: Color.fromRGBO(240, 221, 252, 0.612),
-                borderRadius: BorderRadius.circular(20),
+              
+              const SizedBox(height: 16),
+              
+              // University News Card
+              _buildMenuCard(
+                context,
+                title: 'ข่าวคณะและมหาวิทยาลัย',
+                icon: Icons.school_outlined,
+                onTap: () {
+                  Navigator.pushNamed(context, '/uniNews');
+                },
               ),
-              child: ListTile(
-                  // leading: Icon(Icons.newspaper),
-                  title: const Text(
-                    'ข่าวรับสมัครงาน-ประชาสัมพันธ์',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  trailing: const Icon(Icons.arrow_forward_ios),
-                  onTap: () {
-                    Navigator.pushNamed(context, '/rescruitmentNews');
-                  }),
+              
+              const SizedBox(height: 16),
+              
+              // Scholarship News Card
+              _buildMenuCard(
+                context,
+                title: 'ข่าวทุนการศึกษา',
+                icon: Icons.card_membership_outlined,
+                onTap: () {
+                  Navigator.pushNamed(context, '/scholarshipNews');
+                },
+              ),
+              
+              const SizedBox(height: 16),
+              
+              // Recruitment News Card
+              _buildMenuCard(
+                context,
+                title: 'ข่าวรับสมัครงาน-ประชาสัมพันธ์',
+                icon: Icons.work_outline,
+                onTap: () {
+                  Navigator.pushNamed(context, '/rescruitmentNews');
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMenuCard(
+    BuildContext context, {
+    required String title,
+    required IconData icon,
+    required VoidCallback onTap,
+  }) {
+    return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(15),
+        onTap: onTap,
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Colors.deepPurple.shade50,
+                Colors.deepPurple.shade100,
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
             ),
-          ],
-        ));
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Row(
+            children: [
+              // Icon
+              Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: Colors.deepPurple.shade200,
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  icon,
+                  color: Colors.white,
+                  size: 28,
+                ),
+              ),
+              
+              const SizedBox(width: 16),
+              
+              // Title
+              Expanded(
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.deepPurple.shade900,
+                  ),
+                ),
+              ),
+              
+              // Forward Icon
+              Icon(
+                Icons.arrow_forward_ios,
+                color: Colors.deepPurple.shade700,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

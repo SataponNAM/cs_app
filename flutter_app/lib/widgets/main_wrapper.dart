@@ -109,15 +109,6 @@ class _MainWrapperState extends State<MainWrapper> {
             color: Colors.white,
             colorBlendMode: BlendMode.srcIn,
           ),
-          const SizedBox(width: 10),
-          Text(
-            'Department Portal',
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-            ),
-          ),
         ],
       ),
       centerTitle: true,

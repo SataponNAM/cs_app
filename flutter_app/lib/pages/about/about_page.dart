@@ -13,78 +13,141 @@ class _AboutPageState extends State<AboutPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: const Color.fromRGBO(243, 237, 247, 100),
-          title: Image.asset(
-            'assets/images/logo.png',
-            width: 50,
-          ),
-          centerTitle: true,
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.white,
+        title: Image.asset(
+          'assets/images/logo.png',
+          width: 70,
         ),
-        body: ListView(
-          padding: const EdgeInsets.only(top: 20),
-          children: [
-            const Center(
-              child: Text('แนะนำภาควิชา',
-                  style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold)),
-            ),
-            const SizedBox(height: 20),
-            Container(
-              padding: const EdgeInsets.all(10),
-              margin: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: Color.fromRGBO(240, 221, 252, 0.612),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: ListTile(
-                  // leading: Icon(Icons.newspaper),
-                  title: const Text(
-                    'โครงสร้างภาควิชา',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        centerTitle: true,
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: Text(
+                  'แนะนำภาควิชา',
+                  style: TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.deepPurple.shade800,
                   ),
-                  trailing: const Icon(Icons.arrow_forward_ios),
-                  onTap: () {}),
-            ),
-            const SizedBox(height: 10),
-            Container(
-              padding: const EdgeInsets.all(10),
-              margin: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: Color.fromRGBO(240, 221, 252, 0.612),
-                borderRadius: BorderRadius.circular(20),
+                ),
               ),
-              child: ListTile(
-                  // leading: Icon(Icons.newspaper),
-                  title: const Text(
-                    'บุคลากรสายวิชาการ',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  trailing: const Icon(Icons.arrow_forward_ios),
-                  onTap: () {
-                    context.read<BottomNavCubit>().changeSelectedIndex(1);
-                    Navigator.pushNamed(context, '/');
-                  }),
-            ),
-            const SizedBox(height: 10),
-            Container(
-              padding: const EdgeInsets.all(10),
-              margin: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: Color.fromRGBO(240, 221, 252, 0.612),
-                borderRadius: BorderRadius.circular(20),
+              const SizedBox(height: 24),
+              
+              // Department Structure Card
+              _buildMenuCard(
+                context,
+                title: 'โครงสร้างภาควิชา',
+                icon: Icons.account_tree_outlined,
+                onTap: () {
+                  //
+                }
               ),
-              child: ListTile(
-                  // leading: Icon(Icons.newspaper),
-                  title: const Text(
-                    'บุคลากรสายสนับสนุน',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  trailing: const Icon(Icons.arrow_forward_ios),
-                  onTap: () {
-                    Navigator.pushNamed(context, '/supportPers');
-                  }),
+              
+              const SizedBox(height: 16),
+              
+              // Academic Personnel Card
+              _buildMenuCard(
+                context,
+                title: 'บุคลากรสายวิชาการ',
+                icon: Icons.school_outlined,
+                onTap: () {
+                  context.read<BottomNavCubit>().changeSelectedIndex(1);
+                  Navigator.pushNamed(context, '/');
+                },
+              ),
+              
+              const SizedBox(height: 16),
+              
+              // Support Personnel Card
+              _buildMenuCard(
+                context,
+                title: 'บุคลากรสายสนับสนุน',
+                icon: Icons.support_outlined,
+                onTap: () {
+                  Navigator.pushNamed(context, '/supportPers');
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMenuCard(
+    BuildContext context, {
+    required String title,
+    required IconData icon,
+    required VoidCallback onTap,
+  }) {
+    return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(15),
+        onTap: onTap,
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Colors.deepPurple.shade50,
+                Colors.deepPurple.shade100,
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
             ),
-          ],
-        ));
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Row(
+            children: [
+              // Icon
+              Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: Colors.deepPurple.shade200,
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  icon,
+                  color: Colors.white,
+                  size: 28,
+                ),
+              ),
+              
+              const SizedBox(width: 16),
+              
+              // Title
+              Expanded(
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.deepPurple.shade900,
+                  ),
+                ),
+              ),
+              
+              // Forward Icon
+              Icon(
+                Icons.arrow_forward_ios,
+                color: Colors.deepPurple.shade700,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

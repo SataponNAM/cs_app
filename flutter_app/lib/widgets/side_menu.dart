@@ -155,6 +155,7 @@ class _SideMenuState extends State<SideMenu> {
                       )
                     : const Icon(Icons.person_outline, color: Colors.white),
           ),
+          
           const SizedBox(width: 16),
           Expanded(
             child: Column(

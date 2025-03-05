@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/pages/download/staff_download_page.dart';
-import 'package:flutter_app/pages/download/student_download_page.dart';
 
 class DownloadPage extends StatefulWidget {
   const DownloadPage({super.key});
@@ -13,69 +11,129 @@ class _DownloadPageState extends State<DownloadPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-        appBar: AppBar(
-          backgroundColor: const Color.fromRGBO(243, 237, 247, 100),
-          title: Image.asset(
-            'assets/images/logo.png',
-            width: 50,
-          ),
-          centerTitle: true,
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.white,
+        title: Image.asset(
+          'assets/images/logo.png',
+          width: 70,
         ),
-        body: ListView(
-          padding: const EdgeInsets.only(top: 20),
-          children: [
-            const Center(
-              child: Text('ดาวน์โหลด',
-                  style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold)),
-            ),
-            const SizedBox(height: 20),
-            Container(
-              padding: const EdgeInsets.all(10),
-              margin: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: Color.fromRGBO(240, 221, 252, 0.612),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: ListTile(
-                // leading: Icon(Icons.newspaper),
-                title: const Text(
-                  'นักศึกษา',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        centerTitle: true,
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: Text(
+                  'ดาวน์โหลด',
+                  style: TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.deepPurple.shade800,
+                  ),
                 ),
-                trailing: const Icon(Icons.arrow_forward_ios),
+              ),
+              
+              const SizedBox(height: 24),
+              
+              // Student Downloads Card
+              _buildMenuCard(
+                context,
+                title: 'นักศึกษา',
+                icon: Icons.school_outlined,
                 onTap: () {
-                  Navigator.pushNamed(
-                      context,
-                      '/downloadStudent'
-                  );
+                  Navigator.pushNamed(context, '/downloadStudent');
                 },
               ),
-            ),
-            const SizedBox(height: 10),
-            Container(
-              padding: const EdgeInsets.all(10),
-              margin: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: Color.fromRGBO(240, 221, 252, 0.612),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: ListTile(
-                // leading: Icon(Icons.newspaper),
-                title: const Text(
-                  'บุคลากร',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-                trailing: const Icon(Icons.arrow_forward_ios),
+              
+              const SizedBox(height: 16),
+              
+              // Staff Downloads Card
+              _buildMenuCard(
+                context,
+                title: 'บุคลากร',
+                icon: Icons.support_outlined,
                 onTap: () {
-                  Navigator.pushNamed(
-                      context,
-                      '/downloadStaff'
-                    );
+                  Navigator.pushNamed(context, '/downloadStaff');
                 },
               ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMenuCard(
+    BuildContext context, {
+    required String title,
+    required IconData icon,
+    required VoidCallback onTap,
+  }) {
+    return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(15),
+        onTap: onTap,
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Colors.deepPurple.shade50,
+                Colors.deepPurple.shade100,
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
             ),
-          ],
-        ));
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Row(
+            children: [
+              // Icon
+              Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: Colors.deepPurple.shade200,
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  icon,
+                  color: Colors.white,
+                  size: 28,
+                ),
+              ),
+              
+              const SizedBox(width: 16),
+              
+              // Title
+              Expanded(
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.deepPurple.shade900,
+                  ),
+                ),
+              ),
+              
+              // Forward Icon
+              Icon(
+                Icons.arrow_forward_ios,
+                color: Colors.deepPurple.shade700,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
