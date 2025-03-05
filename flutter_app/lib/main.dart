@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/pages/coursePrograms/bachelor_normal_page.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 import 'package:flutter_app/logic/bottom_nav_cubit.dart';
@@ -99,6 +100,8 @@ class MyApp extends StatelessWidget {
         '/academic': (context) => AcademicPage(),
         '/graduateStd': (context) => GraduateStudentPage(),
         '/stdAffair': (context) => StudentAffairsPage(),
+
+        '/bachelorNormal': (context) => BachelorNormalPage(),
       },
       //home: MainWrapper(),
     );

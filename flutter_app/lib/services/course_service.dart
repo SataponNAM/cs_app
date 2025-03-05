@@ -57,4 +57,5 @@ class CourseHttp {
       return text;
     }
   }
+
 }

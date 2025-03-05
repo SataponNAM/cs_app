@@ -28,7 +28,23 @@ class _RecruitmentNewsPageState extends State<RecruitmentNewsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("ข่าวรับสมัครงาน-ประชาสัมพันธ์")),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.deepPurple.shade800),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        title: Text(
+          'ข่าวรับสมัครงาน-ประชาสัมพันธ์',
+          style: TextStyle(
+            color: Colors.deepPurple.shade800,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        centerTitle: true,
+      ),
       body: FutureBuilder<List<News>>(
         future: futureNews,
         builder: (context, snapshot) {
