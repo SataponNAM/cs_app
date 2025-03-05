@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/news_model.dart';
 import 'package:flutter_app/pages/news/news_detail_page.dart';
-import 'package:flutter_app/services/http_service.dart';
+import 'package:flutter_app/services/news_service.dart';
 import 'package:intl/intl.dart';
 
 class RecruitmentNewsPage extends StatefulWidget {

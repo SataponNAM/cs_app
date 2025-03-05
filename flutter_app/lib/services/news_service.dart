@@ -1,5 +1,4 @@
 // http
-
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/news_model.dart';
