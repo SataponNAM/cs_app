@@ -4,14 +4,14 @@ import 'package:flutter_app/pages/news/news_detail_page.dart';
 import 'package:flutter_app/services/http_service.dart';
 import 'package:intl/intl.dart';
 
-class UniversityNews extends StatefulWidget {
-  const UniversityNews({super.key});
+class RecruitmentNewsPage extends StatefulWidget {
+  const RecruitmentNewsPage({super.key});
 
   @override
-  State<UniversityNews> createState() => _UniversityNewsState();
+  State<RecruitmentNewsPage> createState() => _RecruitmentNewsPageState();
 }
 
-class _UniversityNewsState extends State<UniversityNews> {
+class _RecruitmentNewsPageState extends State<RecruitmentNewsPage> {
   final HttpService httpService = HttpService();
   static const String baseUrl = 'http://202.44.40.179:3000/posts';
 
@@ -21,14 +21,14 @@ class _UniversityNewsState extends State<UniversityNews> {
   void initState() {
     super.initState();
     futureNews = httpService.fetchNews(strUrl: baseUrl).then((newsList) {
-      return newsList.where((news) => news.type == "ข่าวคณะและมหาวิทยาลัย").toList();
+      return newsList.where((news) => news.type == "ข่าวรับสมัครงาน-ประชาสัมพันธ์").toList();
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("ข่าวคณะและมหาวิทยาลัย")),
+      appBar: AppBar(title: const Text("ข่าวรับสมัครงาน-ประชาสัมพันธ์")),
       body: FutureBuilder<List<News>>(
         future: futureNews,
         builder: (context, snapshot) {

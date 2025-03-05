@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
+
 import 'package:flutter_app/logic/bottom_nav_cubit.dart';
 import 'package:flutter_app/logic/drawer/drawer_bloc.dart';
 import 'package:flutter_app/pages/about/about_page.dart';
@@ -11,6 +13,7 @@ import 'package:flutter_app/pages/download/staff_download_page.dart';
 import 'package:flutter_app/pages/download/student_download_page.dart';
 import 'package:flutter_app/pages/news/department_news_page.dart';
 import 'package:flutter_app/pages/news/news_page.dart';
+import 'package:flutter_app/pages/news/recruitment_news_page.dart';
 import 'package:flutter_app/pages/news/scholarships_news.dart';
 import 'package:flutter_app/pages/news/university_news.dart';
 import 'package:flutter_app/pages/rule/academic_page.dart';
@@ -23,6 +26,7 @@ import 'package:flutter_app/pages/service/course_procession_page.dart';
 import 'package:flutter_app/pages/service/handbook_page.dart';
 import 'package:flutter_app/pages/service/service_page.dart';
 import 'package:flutter_app/widgets/main_wrapper.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -37,6 +41,8 @@ Future<void> main() async {
 
   // Request notification permission
   await Permission.notification.request();
+
+  await initializeDateFormatting('th', null);
   
   runApp(
     MultiBlocProvider(
@@ -75,6 +81,7 @@ class MyApp extends StatelessWidget {
         '/departmentNews': (context) => DepartmentNewsPage(),
         '/uniNews': (context) => UniversityNews(),
         '/scholarshipNews': (context) => ScholarshipsNews(),
+        '/rescruitmentNews': (contsxt) => RecruitmentNewsPage(),
 
         '/csb': (context) => CsbPage(),
 

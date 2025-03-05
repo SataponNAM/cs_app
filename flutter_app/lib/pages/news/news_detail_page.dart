@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:intl/intl.dart';
 
 class NewsDetailPage extends StatefulWidget {
   final dynamic newsItem;
@@ -23,12 +24,19 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    // แปลงวันที่
+    DateTime postDate = DateFormat('dd/MM/yyyy').parse(widget.newsItem.PostDate);
+    String formattedDate = DateFormat('d MMMM yyyy', 'th').format(postDate);
+    int thaiYear = postDate.year + 543; // Convert to Thai year (Buddhist Era)
+    String thaiFormattedDate = formattedDate.replaceFirst(postDate.year.toString(), thaiYear.toString());
+    
     return Scaffold(
       appBar: AppBar(),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(10),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               if (imgUrl.isNotEmpty)
                 imgUrl.length == 1
@@ -57,17 +65,32 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                           );
                         }).toList(),
                       ),
+
               const SizedBox(height: 20),
               Text(
                 widget.newsItem.Title ?? 'No Title',
                 style:
                     const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 20),
               Text(
                 widget.newsItem.Message ?? 'No Content',
                 style: TextStyle(fontSize: 18),
               ),
+
+              const SizedBox(height: 30),
+              Row(
+                children: [
+                  Icon(Icons.calendar_today, color: const Color.fromARGB(255, 121, 121, 121),),
+                  SizedBox(width: 10,),
+                  Text(
+                    thaiFormattedDate,
+                    style: TextStyle(fontSize: 18, color: const Color.fromARGB(255, 121, 121, 121)),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 20),
             ],
           ),
         ),

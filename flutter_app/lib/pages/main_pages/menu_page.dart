@@ -1,12 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/logic/drawer/drawer_bloc.dart';
-import 'package:flutter_app/logic/bottom_nav_cubit.dart';
-import 'package:flutter_app/pages/about/about_page.dart';
-import 'package:flutter_app/pages/csb/csb_page.dart';
-import 'package:flutter_app/pages/download/download_page.dart';
-import 'package:flutter_app/pages/news/news_page.dart';
-import 'package:flutter_app/pages/rule/rule_page.dart';
-import 'package:flutter_app/pages/service/service_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MenuPage extends StatefulWidget {
@@ -20,26 +13,32 @@ class _NavigationItem {
   final NavItem item;
   final String title;
   final String link;
+  final IconData icon;
 
-  _NavigationItem(this.item, this.title, this.link);
+  _NavigationItem(this.item, this.title, this.link, this.icon);
 }
 
 class _MenuPageState extends State<MenuPage> {
   final List<_NavigationItem> _listItems = [
-    _NavigationItem(NavItem.aboutMenu, "แนะนำภาควิชา", '/aboutCs'),
-    _NavigationItem(NavItem.newsMenu, "ข่าวสารและกิจกรรม", '/newsMenu'),
-    _NavigationItem(NavItem.csbPage, "โครงการพิเศษ(สองภาษา)", '/csb'),
-    _NavigationItem(NavItem.downloadMenu, "ดาวน์โหลด", '/downloadMenu'),
-    _NavigationItem(NavItem.serviceMenu, "บริการนักศึกษา", '/servicesMenu'),
-    _NavigationItem(NavItem.ruleMenu, "ระเบียบ/ประกาศ", '/rule'),
+    _NavigationItem(NavItem.aboutMenu, "แนะนำภาควิชา", '/aboutCs', Icons.info),
+    _NavigationItem(NavItem.newsMenu, "ข่าวสารและกิจกรรม", '/newsMenu', Icons.event),
+    _NavigationItem(NavItem.csbPage, "โครงการพิเศษ", '/csb', Icons.language),
+    _NavigationItem(NavItem.downloadMenu, "ดาวน์โหลด", '/downloadMenu', Icons.download),
+    _NavigationItem(NavItem.serviceMenu, "บริการนักศึกษา", '/servicesMenu', Icons.school),
+    _NavigationItem(NavItem.ruleMenu, "ระเบียบ/ประกาศ", '/rule', Icons.rule),
   ];
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      padding: EdgeInsets.only(top: 20),
+    return GridView.builder(
+      padding: EdgeInsets.all(10),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        mainAxisExtent: 100,
+        crossAxisCount: 2,
+        crossAxisSpacing: 10,
+        mainAxisSpacing: 10,
+      ),
       itemCount: _listItems.length,
-      shrinkWrap: true,
       itemBuilder: (context, index) {
         return BlocBuilder<DrawerBloc, DrawerState>(
           buildWhen: (previous, current) {
@@ -51,36 +50,36 @@ class _MenuPageState extends State<MenuPage> {
     );
   }
 
-  Widget _buildItem(_NavigationItem data, DrawerState state) =>
-      _makeListItem(data, state);
+  Widget _buildItem(_NavigationItem data, DrawerState state) => _makeListItem(data, state);
 
-  Widget _makeListItem(_NavigationItem data, DrawerState state) => Card(
-        color: Colors.transparent,
-        shape: const ContinuousRectangleBorder(
-          borderRadius: BorderRadius.zero,
-        ),
-        borderOnForeground: true,
-        elevation: 0,
-        margin: EdgeInsets.zero,
+  Widget _makeListItem(_NavigationItem data, DrawerState state) => Container(
         child: Builder(
-          builder: (BuildContext context) => Padding(
-            padding: const EdgeInsets.all(5.0),
+          builder: (BuildContext context) => InkWell(
+            onTap: () {
+              // Handle the tap event here
+              Navigator.pushNamed(context, data.link);
+            },
             child: Card(
               shadowColor: Color.fromRGBO(240, 221, 252, 0.612),
-              child: ListTile(
-                title: Text(
-                  data.title,
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.grey.shade800,
-                  ),
+              child: Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Icon(data.icon, color: Colors.grey.shade800, size: 30),
+                    const SizedBox(height: 8),
+                    Expanded(
+                      child: Text(
+                        data.title,
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey.shade800,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                onTap: () {
-                  Navigator.pushNamed(context,
-                      data.link
-                  );
-                },
               ),
             ),
           ),

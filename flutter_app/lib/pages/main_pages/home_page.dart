@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/models/news_model.dart';
 import 'package:flutter_app/pages/news/news_detail_page.dart';
 import 'package:flutter_app/services/http_service.dart';
+import 'package:intl/intl.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -35,7 +36,7 @@ class _HomePageState extends State<HomePage> {
           return const Center(child: Text("No news available"));
         } else {
           List<News> newsList = snapshot.data!;
-          
+
           return Column(
             children: [
               Expanded(
@@ -81,7 +82,9 @@ class _HomePageState extends State<HomePage> {
           style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
       ));
-      sections.addAll(items.take(3).map((item) => _buildNewsItem(item))); // เอามาแสดง 3 ข่าว
+      sections.addAll(items
+          .take(3)
+          .map((item) => _buildNewsItem(item))); // เอามาแสดง 3 ข่าว
     });
 
     return sections;
@@ -95,13 +98,20 @@ class _HomePageState extends State<HomePage> {
             ? '${item.img_url}/${snapshot.data![0]}'
             : ''; // Set empty string if null
 
+        // แปลงวันที่
+        DateTime postDate = DateFormat('dd/MM/yyyy').parse(item.PostDate);
+        String formattedDate = DateFormat('d MMMM yyyy', 'th').format(postDate);
+        int thaiYear = postDate.year + 543; // Convert to Thai year (Buddhist Era)
+        String thaiFormattedDate = formattedDate.replaceFirst(postDate.year.toString(), thaiYear.toString());
+
         return GestureDetector(
           onTap: () {
             Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => NewsDetailPage(
-                    newsItem: item, imageName: (snapshot.data ?? []).cast<String>()),
+                    newsItem: item,
+                    imageName: (snapshot.data ?? []).cast<String>()),
               ),
             );
           },
@@ -130,13 +140,15 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         Text(
                           item.Title,
-                          style: const TextStyle(fontSize: 15),
+                          style: const TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.w500),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                         ),
                         const SizedBox(height: 5),
                         Text(
-                          item.PostDate,
+                          thaiFormattedDate,
+                          //item.PostDate,
                           style: const TextStyle(fontSize: 14),
                         ),
                       ],
