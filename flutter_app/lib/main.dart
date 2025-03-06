@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/pages/professor/professor_detail.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -100,6 +101,7 @@ class MyApp extends StatelessWidget {
         '/masterCs': (context) => MasterCsPage(),
         '/masterSe': (context) => MasterSePage(),
         '/phd': (context) => PhdPage(),
+
       },
       //home: MainWrapper(),
     );
