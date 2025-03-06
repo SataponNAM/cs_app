@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+// หลักสูตร
 class CourseProgram {
   final String category;
   final String title;
@@ -27,6 +28,7 @@ class CourseProgram {
       };
 }
 
+// link download
 class CourseLink {
   final String name;
   final String url;
@@ -47,6 +49,7 @@ class CourseLink {
       };
 }
 
+// รวมหลักสูตรตามสาขา
 class CourseCollection {
   final List<CourseProgram> courses;
 
@@ -68,8 +71,6 @@ class CourseCollection {
 }
 
 // Helper functions for parsing
-CourseCollection courseCollectionFromJson(String str) => 
-    CourseCollection.fromJson(json.decode(str));
+CourseCollection courseCollectionFromJson(String str) => CourseCollection.fromJson(json.decode(str));
 
-String courseCollectionToJson(CourseCollection data) => 
-    json.encode(data.toJson());
+String courseCollectionToJson(CourseCollection data) => json.encode(data.toJson());

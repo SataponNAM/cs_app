@@ -40,6 +40,7 @@ class _SignUpPageState extends State<SignUpPage> {
       body: Container(
         height: size.height,
         width: size.width,
+        // Background gradient
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
@@ -130,16 +131,8 @@ class _SignUpPageState extends State<SignUpPage> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             // Email field
-                            const Text(
-                              'Email',
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Color(0xFF8A56AC),
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            const SizedBox(height: 5),
                             _buildTextField(
+                              title: 'Email',
                               controller: _emailController,
                               icon: Icons.email_outlined,
                               isPassword: false,
@@ -154,16 +147,8 @@ class _SignUpPageState extends State<SignUpPage> {
                             const SizedBox(height: 10),
                             
                             // Username field
-                            const Text(
-                              'Username',
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Color(0xFF8A56AC),
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            const SizedBox(height: 5),
                             _buildTextField(
+                              title: 'Username',
                               controller: _usernameController,
                               icon: Icons.person_outline_rounded,
                               isPassword: false,
@@ -178,16 +163,8 @@ class _SignUpPageState extends State<SignUpPage> {
                             const SizedBox(height: 10),
                             
                             // Password field
-                            const Text(
-                              'Password',
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Color(0xFF8A56AC),
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            const SizedBox(height: 5),
                             _buildTextField(
+                              title: 'Password',
                               controller: _passwordController,
                               icon: Icons.lock_outline_rounded,
                               isPassword: true,
@@ -208,16 +185,8 @@ class _SignUpPageState extends State<SignUpPage> {
                             const SizedBox(height: 10),
                             
                             // Confirm Password field
-                            const Text(
-                              'Confirm Password',
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Color(0xFF8A56AC),
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            const SizedBox(height: 5),
                             _buildTextField(
+                              title: 'Confirm Password',
                               controller: _cfpasswordController,
                               icon: Icons.lock_outline_rounded,
                               isPassword: true,
@@ -334,6 +303,7 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   Widget _buildTextField({
+    required String title,
     required TextEditingController controller,
     required IconData icon,
     required bool isPassword,
@@ -341,48 +311,63 @@ class _SignUpPageState extends State<SignUpPage> {
     Function()? toggleVisibility,
     required String? Function(String?) validator,
   }) {
-    return TextFormField(
-      controller: controller,
-      obscureText: isPassword && !isVisible,
-      style: const TextStyle(fontSize: 14),
-      decoration: InputDecoration(
-        prefixIcon: Icon(
-          icon,
-          color: const Color(0xFF8A56AC).withOpacity(0.7),
-          size: 20,
-        ),
-        suffixIcon: isPassword
-            ? IconButton(
-                icon: Icon(
-                  isVisible
-                      ? Icons.visibility_outlined
-                      : Icons.visibility_off_outlined,
-                  color: const Color(0xFF8A56AC).withOpacity(0.7),
-                  size: 20,
-                ),
-                onPressed: toggleVisibility,
-              )
-            : null,
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 15,
-          vertical: 12,
-        ),
-        filled: true,
-        fillColor: Colors.grey.shade100,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide.none,
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: const TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
             color: Color(0xFF8A56AC),
-            width: 1.0,
           ),
         ),
-        errorStyle: const TextStyle(height: 0.5, fontSize: 12),
-      ),
-      validator: validator,
+
+        const SizedBox(height: 8),
+        TextFormField(
+          controller: controller,
+          obscureText: isPassword && !isVisible,
+          style: const TextStyle(fontSize: 14),
+          decoration: InputDecoration(
+            prefixIcon: Icon(
+              icon,
+              color: const Color(0xFF8A56AC).withOpacity(0.7),
+              size: 20,
+            ),
+            suffixIcon: isPassword
+                ? IconButton(
+                    icon: Icon(
+                      isVisible
+                          ? Icons.visibility_outlined
+                          : Icons.visibility_off_outlined,
+                      color: const Color(0xFF8A56AC).withOpacity(0.7),
+                      size: 20,
+                    ),
+                    onPressed: toggleVisibility,
+                  )
+                : null,
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 15,
+              vertical: 12,
+            ),
+            filled: true,
+            fillColor: Colors.grey.shade100,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide.none,
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(
+                color: Color(0xFF8A56AC),
+                width: 1.0,
+              ),
+            ),
+            errorStyle: const TextStyle(height: 0.5, fontSize: 12),
+          ),
+          validator: validator,
+        ),
+      ],
     );
   }
 

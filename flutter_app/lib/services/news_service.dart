@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 
 class HttpService {
   
+  // ดึงข้อมูลข่าว
   Future<List<News>> fetchNews({required String strUrl}) async {
     debugPrint('url: $strUrl');
     try {
@@ -65,7 +66,7 @@ class HttpService {
     }
   }
 
-  // Load Image Url
+  // โหลด Image Url
   Future<List<String>> fetchImageList(String baseUrl) async {
     if (baseUrl.isEmpty) return []; // ถ้าไม่มี URL, ไม่ต้องโหลดอะไรเลย
 

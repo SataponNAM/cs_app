@@ -36,6 +36,7 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
+  // เช็คว่า login ไว้แล้วหรือยัง
   void check_if_already_login() async {
     logindata = await SharedPreferences.getInstance();
     String? token = logindata.getString('token');
@@ -93,7 +94,7 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Header area with brand/logo
+                  // Header area 
                   SizedBox(height: size.height * 0.05),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -105,6 +106,7 @@ class _LoginPageState extends State<LoginPage> {
                           size: 50,
                           color: Colors.white,
                         ),
+
                         const SizedBox(height: 20),
                         const Text(
                           'Welcome back',
@@ -114,6 +116,7 @@ class _LoginPageState extends State<LoginPage> {
                             fontWeight: FontWeight.w300,
                           ),
                         ),
+
                         const SizedBox(height: 8),
                         const Text(
                           'Sign In',
@@ -171,22 +174,6 @@ class _LoginPageState extends State<LoginPage> {
                             },
                           ),
                           
-                          // Forgot password
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: TextButton(
-                              onPressed: () {
-                                // Handle forgot password
-                              },
-                              child: const Text(
-                                'Forgot Password?',
-                                style: TextStyle(
-                                  color: Color(0xFF8A56AC),
-                                ),
-                              ),
-                            ),
-                          ),
-                          
                           const SizedBox(height: 30),
                           
                           // Login button
@@ -235,7 +222,7 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                           
-                          const SizedBox(height: 30),
+                          const SizedBox(height: 20),
                           
                           // Sign up option
                           Row(
@@ -299,6 +286,7 @@ class _LoginPageState extends State<LoginPage> {
             color: Color(0xFF8A56AC),
           ),
         ),
+
         const SizedBox(height: 8),
         TextFormField(
           controller: controller,
@@ -349,6 +337,7 @@ class _LoginPageState extends State<LoginPage> {
     return hashed.toString();
   }
 
+  // Login Function
   Future<void> loginUser() async {
     final url = Uri.parse('http://202.44.40.179:3000/auth/login');
     String username = _usernameController.text;

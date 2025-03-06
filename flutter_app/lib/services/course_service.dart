@@ -7,6 +7,8 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
 class CourseHttp {
+
+  // โหลดสาขา
   Future<List<Course>> fetchAllCourse({required String strUrl}) async {
     try {
       final response = await http.get(Uri.parse(strUrl), headers: {
@@ -47,6 +49,7 @@ class CourseHttp {
     }
   }
 
+  // โหลดหลักสูตร
   Future<CourseCollection> fetchCourseProgramCollection({required String strUrl}) async {
     try {
       final response = await http.get(
