@@ -12,8 +12,8 @@ class CourseProgram {
   });
 
   factory CourseProgram.fromJson(Map<String, dynamic> json) => CourseProgram(
-        category: json["category"] ?? "Unknown Category",
-        title: json["title"] ?? "Untitled Course",
+        category: json["category"] ?? "",
+        title: json["title"] ?? "",
         links: json["links"] != null
             ? List<CourseLink>.from(
                 json["links"].map((x) => CourseLink.fromJson(x)))

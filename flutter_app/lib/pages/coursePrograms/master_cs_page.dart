@@ -9,14 +9,14 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_app/models/programs_model.dart';
 import '../../services/course_service.dart';
 
-class BachelorNormalPage extends StatefulWidget {
-  const BachelorNormalPage({super.key});
+class MasterCsPage extends StatefulWidget {
+  const MasterCsPage({super.key});
 
   @override
-  State<BachelorNormalPage> createState() => _BachelorNormalPageState();
+  State<MasterCsPage> createState() => _MasterCsPageState();
 }
 
-class _BachelorNormalPageState extends State<BachelorNormalPage> {
+class _MasterCsPageState extends State<MasterCsPage> {
   final CourseHttp _courseHttp = CourseHttp();
   CourseCollection? _courseCollection;
   bool _isLoading = true;
@@ -43,7 +43,7 @@ class _BachelorNormalPageState extends State<BachelorNormalPage> {
 
       final programs = await _courseHttp.fetchCourseProgramCollection(
           strUrl:
-              'http://202.44.40.179/Data_From_Chiab/json/bachelor_normal.json');
+              'http://202.44.40.179/Data_From_Chiab/json/master_cs.json');
 
       setState(() {
         _courseCollection = programs;
@@ -93,7 +93,7 @@ class _BachelorNormalPageState extends State<BachelorNormalPage> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(
-          'ปริญญาตรี ภาคปกติ',
+          'ปริญญาโท (วิทยาการคอมพิวเตอร์)',
           style: TextStyle(color: Colors.deepPurple.shade800),
         ),
         centerTitle: true,

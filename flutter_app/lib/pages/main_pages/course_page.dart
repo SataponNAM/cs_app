@@ -109,6 +109,14 @@ class _CoursePageState extends State<CoursePage> {
         // You can navigate to another page or perform any action you want
         if (course.courseTitle == "ปริญญาตรี ภาคปกติ") {
           Navigator.pushNamed(context, '/bachelorNormal');
+        } else if (course.courseTitle == "ปริญญาตรี โครงการพิเศษ สองภาษา") {
+          Navigator.pushNamed(context, '/bachelorCsb');
+        } else if (course.courseTitle == "ปริญญาโท สาขาวิชาวิทยาการคอมพิวเตอร์"){
+          Navigator.pushNamed(context, '/masterCs');
+        }else if(course.courseTitle == "ปริญญาโท สาขาวิศวกรรมซอฟต์แวร์"){
+          Navigator.pushNamed(context, '/masterSe');
+        }else if(course.courseTitle == "ปริญญาเอก"){
+          Navigator.pushNamed(context, '/phd');
         } else {
           print('click');
         }
