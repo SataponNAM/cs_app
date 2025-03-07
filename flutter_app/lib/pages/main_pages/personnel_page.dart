@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/crew_model.dart';
 import 'package:flutter_app/pages/main_pages/home_page.dart';
-import 'package:flutter_app/pages/professor/professor_detail.dart';
+import 'package:flutter_app/pages/personnel/professor/professor_detail.dart';
 import 'package:flutter_app/services/crew_service.dart';
 
-class ProfessorPage extends StatefulWidget {
-  const ProfessorPage({super.key});
+class PersonnelPage extends StatefulWidget {
+  const PersonnelPage({super.key});
 
   @override
-  State<ProfessorPage> createState() => _ProfessorPageState();
+  State<PersonnelPage> createState() => _PersonnelPageState();
 }
 
-class _ProfessorPageState extends State<ProfessorPage> {
+class _PersonnelPageState extends State<PersonnelPage> {
   late Future<CrewCollection> _crewCollection;
 
   @override

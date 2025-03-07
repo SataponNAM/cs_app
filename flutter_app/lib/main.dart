@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/pages/professor/professor_detail.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,12 +9,15 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_app/widgets/main_wrapper.dart';
 import 'package:flutter_app/logic/bottom_nav_cubit.dart';
 import 'package:flutter_app/logic/drawer/drawer_bloc.dart';
-import 'package:flutter_app/pages/about/about_page.dart';
+import 'package:flutter_app/pages/personnel/about_page.dart';
+
+import 'package:flutter_app/pages/personnel/department_structure.dart';
+import 'package:flutter_app/pages/personnel/professor_page.dart';
 
 import 'package:flutter_app/pages/auth_page/login_page.dart';
 import 'package:flutter_app/pages/auth_page/sign_up_page.dart';
 
-import 'package:flutter_app/pages/about/support_personnel.dart';
+import 'package:flutter_app/pages/personnel/support_personnel.dart';
 import 'package:flutter_app/pages/csb/csb_page.dart';
 
 import 'package:flutter_app/pages/download/download_page.dart';
@@ -72,6 +74,8 @@ class MyApp extends StatelessWidget {
 
         '/aboutCs': (context) => AboutPage(),
         '/supportPers': (context) => SupportPersonnel(),
+        '/professor': (context) => ProfessorPage(),
+        '/departmentStruct': (context) => DepartmentStructure(),
 
         '/newsMenu': (context) => NewsPage(),
         '/departmentNews': (context) => DepartmentNewsPage(),

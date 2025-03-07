@@ -29,7 +29,7 @@ class _MainWrapperState extends State<MainWrapper> {
 
   final List<Widget> topLevelPages = const [
     HomePage(),
-    ProfessorPage(),
+    PersonnelPage(),
     CoursePage(),
     ContactPage(),
     MenuPage(),
@@ -204,7 +204,7 @@ class _MainWrapperState extends State<MainWrapper> {
           _bottomAppBarItem(context,
               defaultIcon: IconlyLight.user,
               page: 1,
-              label: "Professor",
+              label: "Personnel",
               filledIcon: IconlyBold.user_2),
           _bottomAppBarItem(context,
               defaultIcon: IconlyLight.document,

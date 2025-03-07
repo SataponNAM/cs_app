@@ -47,7 +47,7 @@ class _AboutPageState extends State<AboutPage> {
                 title: 'โครงสร้างภาควิชา',
                 icon: Icons.account_tree_outlined,
                 onTap: () {
-                  //
+                  Navigator.pushNamed(context, '/departmentStruct');
                 }
               ),
               
@@ -60,7 +60,7 @@ class _AboutPageState extends State<AboutPage> {
                 icon: Icons.school_outlined,
                 onTap: () {
                   context.read<BottomNavCubit>().changeSelectedIndex(1);
-                  Navigator.pushNamed(context, '/');
+                  Navigator.pushNamed(context, '/professor');
                 },
               ),
               
