@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/crew_model.dart';
-import 'package:flutter_app/pages/main_pages/home_page.dart';
 import 'package:flutter_app/pages/personnel/professor/professor_detail.dart';
 import 'package:flutter_app/services/crew_service.dart';
 
@@ -56,7 +55,7 @@ class _PersonnelPageState extends State<PersonnelPage> {
     if (crewList.isEmpty) return const SizedBox.shrink();
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -68,19 +67,13 @@ class _PersonnelPageState extends State<PersonnelPage> {
                 color: Colors.deepPurple),
           ),
           const SizedBox(height: 8),
-          GridView.builder(
+          ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 8.0,
-              mainAxisSpacing: 8.0,
-              childAspectRatio: 0.8,
-            ),
             itemCount: crewList.length,
             itemBuilder: (context, index) {
               final crew = crewList[index];
-              return _buildCrewCard(crew);
+              return _buildCrewListItem(crew);
             },
           ),
         ],
@@ -88,46 +81,68 @@ class _PersonnelPageState extends State<PersonnelPage> {
     );
   }
 
-  Widget _buildCrewCard(Crew crew) {
-    return GestureDetector(
-      onTap: () => {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ProfessorDetail(crewDetail: crew),
+  Widget _buildCrewListItem(Crew crew) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 2),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.shade300,
+            blurRadius: 10,
+            offset: const Offset(0, 5),
           ),
-        )
-      },
-      child: Card(
-        margin: const EdgeInsets.all(8.0),
-        // shape: OutlineInputBorder(
-        //   borderRadius: BorderRadius.circular(15),
-        // ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Expanded(
-              child: Image.network(
-                'http://' + crew.image,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) {
-                  return const Icon(Icons.person, size: 100);
-                },
-              ),
+        ],
+      ),
+      child: InkWell(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ProfessorDetail(crewDetail: crew),
             ),
-            Container(
-              padding: const EdgeInsets.all(8.0),
-              alignment: Alignment.center,
-              child: Text(
-                crew.name,
-                style: const TextStyle(
-                    fontSize: 12,
+          );
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              // Image section
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: SizedBox(
+                  width: 70,
+                  height: 70,
+                  child: Image.network(
+                    'http://' + crew.image,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return const Icon(Icons.person, size: 50);
+                    },
+                  ),
+                ),
+              ),
+              const SizedBox(width: 16),
+              // Text section
+              Expanded(
+                child: Text(
+                  crew.name,
+                  style: const TextStyle(
+                    fontSize: 14,
                     fontWeight: FontWeight.bold,
-                    color: Colors.deepPurple),
-                textAlign: TextAlign.center,
+                    color: Colors.deepPurple,
+                  ),
+                ),
               ),
-            ),
-          ],
+              // Add arrow icon to indicate it's tappable
+              const Icon(
+                Icons.arrow_forward_ios,
+                color: Colors.deepPurple,
+                size: 16,
+              ),
+            ],
+          ),
         ),
       ),
     );

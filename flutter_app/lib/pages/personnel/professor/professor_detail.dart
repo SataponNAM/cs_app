@@ -14,6 +14,7 @@ class _ProfessorDetailState extends State<ProfessorDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          title: Text("Profile", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),),
           backgroundColor: Colors.deepPurple[500],
           leading: IconButton(
             icon: const Icon(Icons.arrow_back, color: Colors.white),
@@ -41,12 +42,12 @@ class _ProfessorDetailState extends State<ProfessorDetail> {
                           },
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Text(
                         widget.crewDetail.name,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                             color: Colors.deepPurple),
@@ -54,95 +55,98 @@ class _ProfessorDetailState extends State<ProfessorDetail> {
                       Text(
                         widget.crewDetail.englishName,
                         style:
-                            TextStyle(fontSize: 18, color: Colors.deepPurple),
+                            const TextStyle(fontSize: 18, color: Colors.deepPurple),
                       )
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.mail,
                       color: Colors.deepPurple,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Expanded(
                       child: Text(widget.crewDetail.email,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 18,
                           )),
                     )
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 8,
                 ),
+                if(widget.crewDetail.phone.isNotEmpty)
                 Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.phone,
                       color: Colors.deepPurple,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Expanded(
                       child: Text(widget.crewDetail.phone,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 18,
                           )),
                     )
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
+                if(widget.crewDetail.education.isNotEmpty)
                 Card(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 30, vertical: 10),
                     child: Column(children: [
-                      Text('วุฒิการศึกษา',
+                      const Text('วุฒิการศึกษา',
                           style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                               color: Colors.deepPurple)),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Text(
                         widget.crewDetail.education,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 16,
                         ),
                       ),
                     ]),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
+                if(widget.crewDetail.research.isNotEmpty)
                 Card(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 30, vertical: 10),
                     child: Column(children: [
-                      Text('ผลงานทางวิชาการ',
+                      const Text('ผลงานทางวิชาการ',
                           style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                               color: Colors.deepPurple)),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Text(
                         widget.crewDetail.research,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 16,
                         ),
                       ),
