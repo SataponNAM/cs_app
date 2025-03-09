@@ -37,7 +37,7 @@ class _SignUpPageState extends State<SignUpPage> {
     final size = MediaQuery.of(context).size;
     
     return Scaffold(
-      resizeToAvoidBottomInset: true, // Important for keyboard appearance
+      resizeToAvoidBottomInset: true,
       body: Container(
         height: size.height,
         width: size.width,
