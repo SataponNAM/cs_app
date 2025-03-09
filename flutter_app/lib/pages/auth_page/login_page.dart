@@ -129,7 +129,7 @@ class _LoginPageState extends State<LoginPage> {
                         width: size.width,
                         constraints: BoxConstraints(
                           minHeight:
-                              size.height * 0.8, // Ensure sufficient height
+                              size.height * 0.75, // Ensure sufficient height
                         ),
                         decoration: const BoxDecoration(
                           color: Colors.white,
