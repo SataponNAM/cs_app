@@ -120,175 +120,178 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                   ),
                   
-                  // Form area - taking remaining space without scrolling
+                  // Form area with SingleChildScrollView
                   Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(30, 70, 30, 20),
-                      child: Form(
-                        key: _formKey,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            // Email field
-                            _buildTextField(
-                              title: 'Email',
-                              controller: _emailController,
-                              icon: Icons.email_outlined,
-                              isPassword: false,
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter your email';
-                                }
-                                return null;
-                              },
-                            ),
-                            
-                            const SizedBox(height: 10),
-                            
-                            // Username field
-                            _buildTextField(
-                              title: 'Username',
-                              controller: _usernameController,
-                              icon: Icons.person_outline_rounded,
-                              isPassword: false,
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter your username';
-                                }
-                                return null;
-                              },
-                            ),
-                            
-                            const SizedBox(height: 10),
-                            
-                            // Password field
-                            _buildTextField(
-                              title: 'Password',
-                              controller: _passwordController,
-                              icon: Icons.lock_outline_rounded,
-                              isPassword: true,
-                              isVisible: _isPasswordVisible,
-                              toggleVisibility: () {
-                                setState(() {
-                                  _isPasswordVisible = !_isPasswordVisible;
-                                });
-                              },
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter your password';
-                                }
-                                return null;
-                              },
-                            ),
-                            
-                            const SizedBox(height: 10),
-                            
-                            // Confirm Password field
-                            _buildTextField(
-                              title: 'Confirm Password',
-                              controller: _cfpasswordController,
-                              icon: Icons.lock_outline_rounded,
-                              isPassword: true,
-                              isVisible: _isConfirmPasswordVisible,
-                              toggleVisibility: () {
-                                setState(() {
-                                  _isConfirmPasswordVisible = !_isConfirmPasswordVisible;
-                                });
-                              },
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please confirm your password';
-                                }
-                                if (value != _passwordController.text) {
-                                  return 'Passwords do not match';
-                                }
-                                return null;
-                              },
-                            ),
-                            
-                            const SizedBox(height: 40,),
-                            
-                            // Sign Up button
-                            SizedBox(
-                              width: double.infinity,
-                              height: 50,
-                              child: ElevatedButton(
-                                onPressed: _isLoading 
-                                  ? null 
-                                  : () {
-                                    if (_formKey.currentState!.validate()) {
-                                      setState(() {
-                                        _isLoading = true;
-                                      });
-                                      registerUser().then((_) {
-                                        setState(() {
-                                          _isLoading = false;
-                                        });
-                                      });
-                                    }
-                                  },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color(0xFF8A56AC),
-                                  foregroundColor: Colors.white,
-                                  elevation: 0,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
-                                ),
-                                child: _isLoading
-                                  ? const SizedBox(
-                                      width: 24,
-                                      height: 24,
-                                      child: CircularProgressIndicator(
-                                        color: Colors.white,
-                                        strokeWidth: 2,
-                                      ),
-                                    )
-                                  : const Text(
-                                      'Sign Up',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
+                    child: SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(30, 50, 30, 20),
+                        child: Form(
+                          key: _formKey,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              // Email field
+                              _buildTextField(
+                                title: 'Email',
+                                controller: _emailController,
+                                icon: Icons.email_outlined,
+                                isPassword: false,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter your email';
+                                  }
+                                  return null;
+                                },
                               ),
-                            ),
-                            
-                            const SizedBox(height: 15),
-                            
-                            // Login option
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Text(
-                                  'Already have an account?',
-                                  style: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 14,
+                              
+                              const SizedBox(height: 10),
+                              
+                              // Username field
+                              _buildTextField(
+                                title: 'Username',
+                                controller: _usernameController,
+                                icon: Icons.person_outline_rounded,
+                                isPassword: false,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter your username';
+                                  }
+                                  return null;
+                                },
+                              ),
+                              
+                              const SizedBox(height: 10),
+                              
+                              // Password field
+                              _buildTextField(
+                                title: 'Password',
+                                controller: _passwordController,
+                                icon: Icons.lock_outline_rounded,
+                                isPassword: true,
+                                isVisible: _isPasswordVisible,
+                                toggleVisibility: () {
+                                  setState(() {
+                                    _isPasswordVisible = !_isPasswordVisible;
+                                  });
+                                },
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter your password';
+                                  }
+                                  return null;
+                                },
+                              ),
+                              
+                              const SizedBox(height: 10),
+                              
+                              // Confirm Password field
+                              _buildTextField(
+                                title: 'Confirm Password',
+                                controller: _cfpasswordController,
+                                icon: Icons.lock_outline_rounded,
+                                isPassword: true,
+                                isVisible: _isConfirmPasswordVisible,
+                                toggleVisibility: () {
+                                  setState(() {
+                                    _isConfirmPasswordVisible = !_isConfirmPasswordVisible;
+                                  });
+                                },
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please confirm your password';
+                                  }
+                                  if (value != _passwordController.text) {
+                                    return 'Passwords do not match';
+                                  }
+                                  return null;
+                                },
+                              ),
+                              
+                              const SizedBox(height: 30),
+                              
+                              // Sign Up button
+                              SizedBox(
+                                width: double.infinity,
+                                height: 50,
+                                child: ElevatedButton(
+                                  onPressed: _isLoading 
+                                    ? null 
+                                    : () {
+                                      if (_formKey.currentState!.validate()) {
+                                        setState(() {
+                                          _isLoading = true;
+                                        });
+                                        registerUser().then((_) {
+                                          setState(() {
+                                            _isLoading = false;
+                                          });
+                                        });
+                                      }
+                                    },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: const Color(0xFF8A56AC),
+                                    foregroundColor: Colors.white,
+                                    elevation: 0,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
                                   ),
-                                ),
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => LoginPage(),
+                                  child: _isLoading
+                                    ? const SizedBox(
+                                        width: 24,
+                                        height: 24,
+                                        child: CircularProgressIndicator(
+                                          color: Colors.white,
+                                          strokeWidth: 2,
+                                        ),
+                                      )
+                                    : const Text(
+                                        'Sign Up',
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
-                                    );
-                                  },
-                                  child: const Text(
-                                    'Sign In',
+                                ),
+                              ),
+                              
+                              const SizedBox(height: 15),
+                              
+                              // Login option
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Text(
+                                    'Already have an account?',
                                     style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xFF8A56AC),
+                                      color: Colors.grey,
                                       fontSize: 14,
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ],
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => LoginPage(),
+                                        ),
+                                      );
+                                    },
+                                    child: const Text(
+                                      'Sign In',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Color(0xFF8A56AC),
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 20),
+                            ],
+                          ),
                         ),
                       ),
                     ),
