@@ -52,7 +52,9 @@ dependencies:
   carousel_slider: ^5.0.0
   crypto: ^3.0.6
   intl: ^0.20.2
-  cached_network_image: ^3.4.1
+  
+  package_rename: ^1.9.0
+  icons_launcher: ^3.0.1
 
 dev_dependencies:
   flutter_test:

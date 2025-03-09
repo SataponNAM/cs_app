@@ -12,7 +12,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final HttpService httpService = HttpService();
+  final NewsService httpService = NewsService();
   static const String baseUrl = 'http://202.44.40.179:3000/posts';
 
   late Future<List<News>> futureNews;

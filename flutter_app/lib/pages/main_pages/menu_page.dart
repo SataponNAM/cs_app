@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/logic/drawer/drawer_bloc.dart';
+import 'package:flutter_app/logic/NavigatorInBody/drawer_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MenuPage extends StatefulWidget {
@@ -31,17 +31,6 @@ class _MenuPageState extends State<MenuPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        // decoration: BoxDecoration(
-        //   gradient: LinearGradient(
-        //     begin: Alignment.topCenter,
-        //     end: Alignment.bottomCenter,
-        //     colors: [
-        //       Colors.deepPurple[500]!,
-        //       //Colors.deepPurple[300]!,
-        //       Color.fromARGB(255, 201, 92, 159)
-        //     ],
-        //   ),
-        // ),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: GridView.builder(

@@ -6,7 +6,7 @@ import 'package:html/parser.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
-class HttpService {
+class NewsService {
   
   // ดึงข้อมูลข่าว
   Future<List<News>> fetchNews({required String strUrl}) async {

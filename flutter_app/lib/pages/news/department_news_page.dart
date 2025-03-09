@@ -12,7 +12,7 @@ class DepartmentNewsPage extends StatefulWidget {
 }
 
 class _DepartmentNewsPageState extends State<DepartmentNewsPage> {
-  final HttpService httpService = HttpService();
+  final NewsService httpService = NewsService();
   static const String baseUrl = 'http://202.44.40.179:3000/posts';
 
   late Future<List<News>> futureNews;

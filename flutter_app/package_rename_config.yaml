@@ -1,0 +1,16 @@
+package_rename_config:
+  android:
+    app_name: CS App # (String) The display name of the android app
+    package_name: CS App # (String) The package name of the android app
+    override_old_package: # (Optional) (String) Use this to delete the old folder structure of MainActivity or to use the existing code with the new package name
+    lang: flutter # (Optional) (String) The android development language {kotlin(default) or java}
+
+  ios:
+    app_name: CS App # (String) The display name of the ios app
+    bundle_name: CsApp # (String) The bundle name of the ios app
+    package_name: CS App # (String) The product bundle identifier of the ios app
+
+  web:
+    app_name: CS App # (String) The title of the web app and PWA
+    short_app_name: CS App # (String) The short display name of the PWA (Optional, defaults to app_name if not set)
+    description: Application for Computer Science Department # (String) The description of the web app and PWA

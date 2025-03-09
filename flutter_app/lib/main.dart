@@ -8,7 +8,7 @@ import 'package:permission_handler/permission_handler.dart';
 // import page
 import 'package:flutter_app/widgets/main_wrapper.dart';
 import 'package:flutter_app/logic/bottom_nav_cubit.dart';
-import 'package:flutter_app/logic/drawer/drawer_bloc.dart';
+import 'package:flutter_app/logic/NavigatorInBody/drawer_bloc.dart';
 import 'package:flutter_app/pages/personnel/about_page.dart';
 
 import 'package:flutter_app/pages/personnel/department_structure.dart';

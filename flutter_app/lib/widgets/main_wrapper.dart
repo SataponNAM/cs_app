@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/logic/bottom_nav_cubit.dart';
-import 'package:flutter_app/logic/drawer/drawer_bloc.dart';
+import 'package:flutter_app/logic/NavigatorInBody/drawer_bloc.dart';
 import 'package:flutter_app/pages/about_us/about_us_page.dart';
 import 'package:flutter_app/widgets/side_menu.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
