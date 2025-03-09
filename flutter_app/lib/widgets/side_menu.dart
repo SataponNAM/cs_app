@@ -77,7 +77,7 @@ class _SideMenuState extends State<SideMenu> {
   // navigator ใน sidebar
   final List<_NavigationItem> _listItems = [
     _NavigationItem(Icons.people_outline_rounded, NavItem.aboutUs, "เกี่ยวกับเรา"),
-    _NavigationItem(Icons.settings_outlined, NavItem.setting, "ตั้งค่า"),
+    //_NavigationItem(Icons.settings_outlined, NavItem.setting, "ตั้งค่า"),
   ];
 
   @override
