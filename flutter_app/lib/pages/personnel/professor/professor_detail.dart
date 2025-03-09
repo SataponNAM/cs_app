@@ -15,7 +15,7 @@ class _ProfessorDetailState extends State<ProfessorDetail> {
     return Scaffold(
       backgroundColor: Colors.white,
         appBar: AppBar(
-          title: Text("Profile", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),),
+          //title: Text("Profile", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),),
           backgroundColor: Colors.deepPurple[500],
           leading: IconButton(
             icon: const Icon(Icons.arrow_back, color: Colors.white),
