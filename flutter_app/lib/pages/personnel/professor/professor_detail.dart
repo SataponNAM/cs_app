@@ -13,6 +13,7 @@ class _ProfessorDetailState extends State<ProfessorDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
         appBar: AppBar(
           title: Text("Profile", style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),),
           backgroundColor: Colors.deepPurple[500],
