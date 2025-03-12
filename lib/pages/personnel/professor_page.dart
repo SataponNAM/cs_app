@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cs_app/models/crew_model.dart';
 import 'package:cs_app/pages/personnel/professor/professor_detail.dart';
 import 'package:cs_app/services/crew_service.dart';
+import '../../assets/constants.dart' as constants;
 
 class ProfessorPage extends StatefulWidget {
   const ProfessorPage({super.key});
@@ -12,7 +13,7 @@ class ProfessorPage extends StatefulWidget {
 
 class _ProfessorPageState extends State<ProfessorPage> {
   final CrewService crewService = CrewService();
-  static const String baseUrl = 'http://202.44.40.179/Data_From_Chiab/json/crew.json';
+  static const String baseUrl = constants.STAFF;
   late Future<CrewCollection> _crewCollection;
 
   void initState() {

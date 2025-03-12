@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cs_app/models/course_model.dart';
 import 'package:cs_app/services/course_service.dart';
+import '../../assets/constants.dart' as constants;
 
 class CoursePage extends StatefulWidget {
   const CoursePage({
@@ -30,7 +31,7 @@ class _CoursePageState extends State<CoursePage> {
       });
 
       final courses = await _courseHttp.fetchAllCourse(
-          strUrl: 'http://202.44.40.179/Data_From_Chiab/json/courseData.json');
+          strUrl: constants.COURSE_DATA);
       //print(courses);
       setState(() {
         _courses = courses;

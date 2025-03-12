@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cs_app/widgets/webview.dart';
+import '../../assets/constants.dart' as constants;
 
 class StudentDownloadPage extends StatefulWidget {
   const StudentDownloadPage({super.key});
@@ -30,7 +31,7 @@ class _StudentDownloadPageState extends State<StudentDownloadPage> {
         ),
         centerTitle: true,
       ),
-      body: Webview(url: "http://cs.kmutnb.ac.th/student_download.jsp")
+      body: Webview(url: constants.STUDENT_DOWNLOAD)
     );
   }
 }

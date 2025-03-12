@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cs_app/widgets/webview.dart';
-
+import '../../assets/constants.dart' as constants;
 
 class GraduateStudentPage extends StatefulWidget {
   const GraduateStudentPage({super.key});
@@ -31,7 +31,7 @@ class _GraduateStudentPageState extends State<GraduateStudentPage> {
         ),
         centerTitle: true,
       ),
-      body: Webview(url: "http://cs.kmutnb.ac.th/reg-graduate-student.jsp")
+      body: Webview(url: constants.GRADUATE_RULE)
     );
   }
 

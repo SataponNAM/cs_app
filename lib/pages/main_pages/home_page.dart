@@ -3,6 +3,7 @@ import 'package:cs_app/models/news_model.dart';
 import 'package:cs_app/pages/news/news_detail_page.dart';
 import 'package:cs_app/services/news_service.dart';
 import 'package:intl/intl.dart';
+import '../../assets/constants.dart' as constants;
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,7 +14,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final NewsService httpService = NewsService();
-  static const String baseUrl = 'http://202.44.40.179:3000/posts';
+  static const String baseUrl = constants.NEWS;
 
   late Future<List<News>> futureNews;
 

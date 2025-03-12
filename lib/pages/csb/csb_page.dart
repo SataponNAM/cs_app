@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cs_app/widgets/webview.dart';
+import '../../assets/constants.dart' as constants;
 
 class CsbPage extends StatefulWidget {
   const CsbPage({super.key});
@@ -30,7 +31,7 @@ class _CsbPageState extends State<CsbPage> {
         centerTitle: true,
       ),
 
-      body: Webview(url: "http://www.cs.kmutnb.ac.th/csb.jsp")
+      body: Webview(url: constants.CSB_LINK)
     );
   }
 

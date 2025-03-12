@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cs_app/widgets/webview.dart';
-
+import '../../assets/constants.dart' as constants;
 
 class FinancePage extends StatefulWidget {
   const FinancePage({super.key});
@@ -31,7 +31,7 @@ class _FinancePageState extends State<FinancePage> {
         ),
         centerTitle: true,
       ),
-      body: Webview(url: "http://cs.kmutnb.ac.th/reg-finance.jsp")
+      body: Webview(url: constants.FINANCE_RULE)
     );
   }
 

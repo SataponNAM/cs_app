@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import '../../assets/constants.dart' as constants;
+
 
 class AdvisorPage extends StatefulWidget {
   const AdvisorPage({super.key});
@@ -60,7 +62,7 @@ class _AdvisorPageState extends State<AdvisorPage> {
           //Things to do when the page has error when loading
        },
       ))
-      ..loadRequest(Uri.parse('http://cs.kmutnb.ac.th/consult_student.jsp'));
+      ..loadRequest(Uri.parse(constants.ADVISOR));
   }
   
   @override

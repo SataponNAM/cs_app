@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cs_app/models/crew_model.dart';
 import 'package:cs_app/pages/personnel/professor/professor_detail.dart';
 import 'package:cs_app/services/crew_service.dart';
+import '../../assets/constants.dart' as constants;
 
 class PersonnelPage extends StatefulWidget {
   const PersonnelPage({super.key});
@@ -17,7 +18,7 @@ class _PersonnelPageState extends State<PersonnelPage> {
   void initState() {
     super.initState();
     _crewCollection = CrewService().fetchCrewCollection(
-        strUrl: 'http://202.44.40.179/Data_From_Chiab/json/crew.json');
+        strUrl: constants.STAFF);
   }
 
   @override
