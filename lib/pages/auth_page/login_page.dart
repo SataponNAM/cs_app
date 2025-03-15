@@ -87,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
             ),
-        
+
             // Content
             SafeArea(
               child: SingleChildScrollView(
@@ -121,7 +121,7 @@ class _LoginPageState extends State<LoginPage> {
                         ],
                       ),
                     ),
-        
+
                     // Form area
                     Container(
                       padding: const EdgeInsets.fromLTRB(30, 10, 30, 30),
@@ -151,9 +151,9 @@ class _LoginPageState extends State<LoginPage> {
                                 return null;
                               },
                             ),
-        
+
                             const SizedBox(height: 24),
-        
+
                             // Password field
                             _buildInputField(
                               title: 'Password',
@@ -173,9 +173,28 @@ class _LoginPageState extends State<LoginPage> {
                                 return null;
                               },
                             ),
-        
+                            
+                            // Forgot Password link
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                TextButton(
+                                  onPressed: () {
+                                    _showForgotPasswordDialog();
+                                  },
+                                  child: const Text(
+                                    'Forgot Password?',
+                                    style: TextStyle(
+                                      color: Color(0xFF8A56AC),
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+
                             const SizedBox(height: 30),
-        
+
                             // Login button
                             SizedBox(
                               width: double.infinity,
@@ -184,8 +203,7 @@ class _LoginPageState extends State<LoginPage> {
                                 onPressed: _isLoading
                                     ? null
                                     : () {
-                                        if (_formKey.currentState!
-                                            .validate()) {
+                                        if (_formKey.currentState!.validate()) {
                                           setState(() {
                                             _isLoading = true;
                                           });
@@ -222,9 +240,9 @@ class _LoginPageState extends State<LoginPage> {
                                       ),
                               ),
                             ),
-        
+
                             const SizedBox(height: 20),
-        
+
                             // Sign up option
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -332,11 +350,11 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  String hashPassword(String password) {
-    var bytes = utf8.encode(password);
-    var hashed = sha256.convert(bytes);
-    return hashed.toString();
-  }
+  // String hashPassword(String password) {
+  //   var bytes = utf8.encode(password);
+  //   var hashed = sha256.convert(bytes);
+  //   return hashed.toString();
+  // }
 
   // Login Function
   Future<void> loginUser() async {
@@ -350,7 +368,7 @@ class _LoginPageState extends State<LoginPage> {
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
           'username': username,
-          'password': hashPassword(password),
+          'password': password//hashPassword(password),
         }),
       );
 
@@ -388,4 +406,149 @@ class _LoginPageState extends State<LoginPage> {
       );
     }
   }
+
+  void _showForgotPasswordDialog() {
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
+  bool isLoading = false;
+
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return StatefulBuilder(
+        builder: (context, setState) {
+          return AlertDialog(
+            title: const Text(
+              'Forgot Password',
+              style: TextStyle(color: Color(0xFF8A56AC)),
+            ),
+            content: Form(
+              key: formKey,
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    _buildInputField(
+                      title: 'Username',
+                      controller: usernameController,
+                      prefixIcon: Icons.person_outline_rounded,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your username';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 16),
+                    _buildInputField(
+                      title: 'Email',
+                      controller: emailController,
+                      prefixIcon: Icons.email_outlined,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your email';
+                        }
+                        if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
+                            .hasMatch(value)) {
+                          return 'Please enter a valid email';
+                        }
+                        return null;
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text(
+                  'Cancel',
+                  style: TextStyle(color: Colors.grey),
+                ),
+              ),
+              ElevatedButton(
+                onPressed: isLoading
+                    ? null
+                    : () async {
+                        if (formKey.currentState!.validate()) {
+                          setState(() {
+                            isLoading = true;
+                          });
+                          
+                          try {
+                            final url = Uri.parse(
+                                'http://202.44.40.179:3000/auth/forgot-password');
+                            final response = await http.post(
+                              url,
+                              headers: {'Content-Type': 'application/json'},
+                              body: jsonEncode({
+                                'username': usernameController.text,
+                                'email': emailController.text,
+                              }),
+                            );
+
+                            Navigator.of(context).pop();
+                            
+                            if (response.statusCode == 200) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text(
+                                    'Password reset link sent to your email',
+                                  ),
+                                  backgroundColor: Colors.green,
+                                  behavior: SnackBarBehavior.floating,
+                                ),
+                              );
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'Failed: ${jsonDecode(response.body)['message'] ?? 'Unknown error'}',
+                                  ),
+                                  backgroundColor: Colors.red,
+                                  behavior: SnackBarBehavior.floating,
+                                ),
+                              );
+                            }
+                          } catch (e) {
+                            Navigator.of(context).pop();
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                  'Network error. Please check your connection.',
+                                ),
+                                backgroundColor: Colors.red,
+                                behavior: SnackBarBehavior.floating,
+                              ),
+                            );
+                          }
+                        }
+                      },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF8A56AC),
+                  foregroundColor: Colors.white,
+                ),
+                child: isLoading
+                    ? const SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
+                          strokeWidth: 2,
+                        ),
+                      )
+                    : const Text('Submit'),
+              ),
+            ],
+          );
+        },
+      );
+    },
+  );
+}
+
 }
