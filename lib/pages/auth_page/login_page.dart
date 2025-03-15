@@ -368,7 +368,7 @@ class _LoginPageState extends State<LoginPage> {
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
           'username': username,
-          'password': password//hashPassword(password),
+          'password': password,
         }),
       );
 
