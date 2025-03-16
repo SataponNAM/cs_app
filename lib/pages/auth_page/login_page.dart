@@ -350,11 +350,11 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  // String hashPassword(String password) {
-  //   var bytes = utf8.encode(password);
-  //   var hashed = sha256.convert(bytes);
-  //   return hashed.toString();
-  // }
+  String hashPassword(String password) {
+    var bytes = utf8.encode(password);
+    var hashed = sha256.convert(bytes);
+    return hashed.toString();
+  }
 
   // Login Function
   Future<void> loginUser() async {
@@ -429,6 +429,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    // username
                     _buildInputField(
                       title: 'Username',
                       controller: usernameController,
@@ -441,6 +442,8 @@ class _LoginPageState extends State<LoginPage> {
                       },
                     ),
                     const SizedBox(height: 16),
+                    
+                    // email
                     _buildInputField(
                       title: 'Email',
                       controller: emailController,

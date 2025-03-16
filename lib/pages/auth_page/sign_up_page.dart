@@ -401,7 +401,7 @@ class _SignUpPageState extends State<SignUpPage> {
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
           'username': username,
-          'password': hashPassword(password),
+          'password': password, //hashPassword(password),
           'email': email,
         }),
       );
